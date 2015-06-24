@@ -5,7 +5,6 @@
 
 namespace BrownPaperTickets;
 
-
 require_once( plugin_dir_path( __FILE__ ).'../lib/bptWordpress.php' );
 
 /**
@@ -25,17 +24,21 @@ use BrownPaperTickets\BPTWidgets;
 use BrownPaperTickets\BptWordpress as Utilities;
 
 
-const BPT_VERSION = '0.6.1';
+const BPT_VERSION = '0.7.0';
 const PLUGIN_SLUG = 'brown_paper_tickets';
 
 class BPTPlugin {
 
-	protected $settings_fields;
 	static $menu_slug;
+	static $plugin_root;
+
+	protected $settings_fields;
+
 	protected static $plugin_slug;
+
+	protected static $modules = array();
 	protected static $plugin_version;
 	protected static $instance = null;
-
 	protected static $calendar;
 	protected static $general;
 	protected static $account;
@@ -52,20 +55,21 @@ class BPTPlugin {
 
 		self::$plugin_version = BPT_VERSION;
 
+		self::$plugin_root = dirname( __FILE__ );
+
 		$this->load_shared();
 
 		if ( is_admin() ) {
 			$this->load_admin();
 		}
 
-		self::$calendar = new Modules\Calendar;
-		self::$general = new Modules\General;
-		self::$account = new Modules\Account;
-		self::$appearance = new Modules\Appearance;
-		self::$purcahse = new Modules\Purchase;
-		self::$event_list = new Modules\EventList;
-		self::$help = new Modules\Help;
-
+		self::$modules['general'] = new Modules\General();
+		self::$modules['calendar'] =  new Modules\Calendar();
+		self::$modules['account'] = new Modules\Account();
+		self::$modules['appearance'] = new Modules\Appearance();
+		self::$modules['purchase'] = new Modules\Purchase();
+		self::$modules['event_list'] = new Modules\EventList();
+		self::$modules['help'] = new Modules\Help();
 	}
 
 	public static function get_instance() {
@@ -94,25 +98,15 @@ class BPTPlugin {
 		}
 
 		if ( version_compare( PHP_VERSION, '5.3', '<' ) && is_admin() ) {
-			exit('Sorry, the Brown Paper Tickets plugin requires PHP version 5.3 or higher but you are using '. PHP_VERSION . '. Please contact your hosting provider for more info. ');
+			exit( 'Sorry, the Brown Paper Tickets plugin requires PHP version 5.3 or higher but you are using '. PHP_VERSION . '. Please contact your hosting provider for more info.' );
 		}
 
 		if ( ! get_option( '_bpt_dev_id' ) && ! get_option( '_bpt_client_id' ) ) {
 			update_option( '_bpt_show_wizard', 'true' );
 
-			$account = new Modules\Account;
-			$appearance = new Modules\Appearance;
-			$calendar = new Modules\Calendar;
-			$purchase = new Modules\Purchase;
-			$event_list = new Modules\EventList;
-			$help = new Modules\Help;
-
-			$calendar->activate();
-			$account->activate();
-			$appearance->activate();
-			$purchase->activate();
-			$event_list->activate();
-			$help->activate();
+			foreach (self::$modules as $module) {
+				$module->activate();
+			}
 		}
 	}
 
@@ -149,7 +143,6 @@ class BPTPlugin {
 		add_action( 'admin_init', array( $this, 'bpt_show_wizard' ) );
 		add_action( 'admin_menu', array( $this, 'create_bpt_settings' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'load_admin_scripts' ) );
-
 	}
 
 	public function load_shared() {
@@ -183,8 +176,7 @@ class BPTPlugin {
 			);
 		}
 
-		if ( $hook === 'admin_page_brown_paper_tickets_settings_setup_wizard' ) {
-
+		if ( $hook === 'bpt-settings_page_brown_paper_tickets_settings_setup_wizard' ) {
 			wp_enqueue_style( 'bpt_admin_css', plugins_url( '/admin/assets/css/bpt-admin.css', dirname( __FILE__ ) ), false, BPT_VERSION );
 
 			wp_enqueue_style( 'bpt_setup_wizard_css', plugins_url( '/admin/assets/css/bpt-setup-wizard.css', dirname( __FILE__ ) ), false, BPT_VERSION );
@@ -222,42 +214,46 @@ class BPTPlugin {
 	}
 
 	public function create_bpt_settings() {
-
 		add_menu_page(
 			'Brown Paper Tickets',
 			'BPT Settings',
 			'administrator',
 			self::$menu_slug,
 			array( $this, 'render_bpt_options_page' ),
-			'dashicons-tickets'
+			'dashicons-tickets-alt'
 		);
 
 		add_submenu_page(
-			null,  //or 'options.php'
-			'BPT Setup Wizard',
-			'BPT Setup Wizard',
+			'brown_paper_tickets_settings',  //or 'options.php'
+			'General',
+			'General',
+			'manage_options',
+			self::$menu_slug,
+			array( $this, 'render_bpt_options_page' )
+		);
+
+		add_submenu_page(
+			self::$menu_slug,  //or 'options.php'
+			'Brown Paper Tickets Setup Wizard',
+			'Setup Wizard',
 			'manage_options',
 			self::$menu_slug . '_setup_wizard',
 			array( $this, 'render_bpt_setup_wizard_page' )
 		);
 
-		self::$general->load_settings();
-		self::$account->load_settings();
-		self::$appearance->load_settings();
-		self::$purcahse->load_settings();
-		self::$event_list->load_settings();
-		self::$help->load_settings();
-		self::$calendar->load_settings();
+		foreach (self::$modules as $module) {
+			$module->load_settings();
+		}
+
 	}
 
 	public function bpt_show_wizard() {
 
 		if ( get_option( '_bpt_show_wizard' ) === 'true' ) {
 
-			update_option( '_bpt_show_wizard', 'false' );
 
-			if ( ! isset( $_GET['activate-multi'] ) ) {
-
+			if ( ! is_multisite() ) {
+				update_option( '_bpt_show_wizard', 'false' );
 				wp_redirect( 'admin.php?page=brown_paper_tickets_settings_setup_wizard' );
 
 			}

@@ -1,5 +1,17 @@
 # Changelog
 
+### v0.7.0
+
+#### Improvments
+* Reworked the welcome message on the plugin settings to match the native WordPress dashboard styles.
+
+#### Bug Fixes
+* Fixed issue where plugin would redirect super admin to plugin settings page upon network activation.
+
+#### Other
+* Swapped icon of the BPT Settings menu.
+
+
 ### v0.6.1
 * Updated BptAPI library to fix an issue that caused the API to reject requests.
 

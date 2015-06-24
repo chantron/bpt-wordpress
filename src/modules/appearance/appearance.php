@@ -13,32 +13,28 @@ class Appearance extends Module {
 
 	public function register_sections() {
 
-		$section_title = 'Appearance Settings';
-		$section_suffix = '_appearance';
-
-		$inputs = new Appearance\Inputs();
-
+		$inputs = new Appearance\Inputs;
 		add_settings_section(
-			$section_title,
-			$section_title,
+			'Appearance',
+			'Appearance',
 			array( $inputs, 'section' ),
-			self::$menu_slug . $section_suffix
+			self::$menu_slug . '_appearance'
 		);
 
 		add_settings_field(
 			self::$setting_prefix . 'event_list_style', // The ID of the input.
-			'Event List Appearance', // The title of the field.
+			'Event List', // The title of the field.
 			array( $inputs, 'event_list' ), // Event HTML callback
-			self::$menu_slug . $section_suffix, // The settings page.
-			$section_title // The section that the field will be rendered in.
+			self::$menu_slug . '_appearance', // The settings page.
+			'Appearance' // The section that the field will be rendered in.
 		);
 
 		add_settings_field(
 			self::$setting_prefix . 'calendar_style',
-			'Calendar Appearance',
+			'Calendar',
 			array( $inputs, 'calendar' ),
-			self::$menu_slug . $section_suffix,
-			$section_title
+			self::$menu_slug . '_appearance', // The settings page.
+			'Appearance' // The section that the field will be rendered in.
 		);
 	}
 
@@ -73,4 +69,36 @@ class Appearance extends Module {
 		delete_option( self::$menu_slug . self::$setting_prefix . 'event_list_style' );
 	}
 
+	public function load_menus() {
+		$page = add_submenu_page(
+			self::$menu_slug,  //or 'options.php'
+			'Brown Paper Tickets Appearance',
+			'Appearance',
+			'manage_options',
+			self::$menu_slug . '_appearance',
+			array( $this, 'render_menu' )
+		);
+
+		add_action( 'load-' . $page, array( $this, 'add_help' ) );
+	}
+
+	public function add_help() {
+		$screen = get_current_screen();
+
+		$screen->add_help_tab( array(
+			'id' => 'bpt-appearance-event-list-help',
+			'title' => 'Event List Selectors',
+			'callback' => array( 'BrownPaperTickets\Modules\Appearance\Inputs', 'event_list_help' ),
+		) );
+
+		$screen->add_help_tab( array(
+			'id' => 'bpt-appearance-calendar-help',
+			'title' => 'Calendar Selectors',
+			'callback' => array( 'BrownPaperTickets\Modules\Appearance\Inputs', 'calendar_help' ),
+		) );
+	}
+
+	public function render_menu() {
+		require_once( __DIR__ . '/appearance-menu.php' );
+	}
 }

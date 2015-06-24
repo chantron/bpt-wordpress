@@ -349,7 +349,7 @@
         $('a#test-api').click(admin.testApi);
 
         bptWelcomePanel = new Ractive({
-            el: '.bpt-welcome-panel-content',
+            el: '#greeting',
             template: '#bpt-welcome-panel-template',
             data: {}
         });

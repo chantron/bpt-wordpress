@@ -15,13 +15,16 @@ use BrownPaperTickets\BptWordpress as Utilities;
 class Module {
 
 	protected static $menu_slug = null;
+	protected static $plugin_root;
 	protected static $setting_prefix = '_bpt_';
 	static $section_title;
 	static $section_suffix;
+	static $inputs;
 
 	public function __construct() {
 
 		self::$menu_slug = BPTPlugin::$menu_slug;
+		self::$plugin_root = BPTPlugin::$plugin_root;
 
 		$this->init_actions();
 
@@ -80,7 +83,14 @@ class Module {
 	}
 
 	public function load_menus() {
-
+		// add_submenu_page(
+		// 	self::$menu_slug,  //or 'options.php'
+		// 	'Brown Paper Tickets ' . self::$section_title,
+		// 	self::$section_title,
+		// 	'manage_options',
+		// 	self::$menu_slug . self::$section_suffix,
+		// 	array( $this, 'render_menu' )
+		// );
 	}
 
 	public function load_shortcode() {
@@ -125,6 +135,10 @@ class Module {
 
 	public function deactivate() {
 		$this->remove_setting_values();
+	}
+
+	public function render_menu() {
+
 	}
 
 }

@@ -1,4 +1,4 @@
-a:focus, a:active, 
+a:focus, a:active,
 button::-moz-focus-inner,
 input[type="reset"]::-moz-focus-inner,
 input[type="button"]::-moz-focus-inner,
@@ -30,8 +30,8 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
 
 nav#brown_paper_tickets_settings {
     float: left;
-    width: 100%; 
-    margin-top: 10px;   
+    width: 100%;
+    margin-top: 10px;
 }
 
     nav#brown_paper_tickets_settings ul {
@@ -150,7 +150,7 @@ div.brown_paper_tickets_settings_help {
     .bpt-welcome-panel-content {
         float: left;
         width: 100%;
-        
+
     }
 
     .bpt-welcome-panel-content h1 {
@@ -212,4 +212,14 @@ button#bpt-refresh-events {
 div#bpt-appearance-help-event-list,
 div#bpt-appearance-help-calendar {
 
+}
+
+.bpt-icon {
+    padding-top: 5px;
+}
+
+@media screen and ( max-width: 782px ) {
+    .bpt-icon {
+        padding-top: 0;
+    }
 }

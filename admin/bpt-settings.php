@@ -8,26 +8,64 @@ use BrownPaperTickets\BPTPlugin;
 $menu_slug = BPTPlugin::get_menu_slug();
 $plugin_slug    = BPTPlugin::get_plugin_slug();
 $plugin_version = BPTPlugin::get_plugin_version();
+
 ?>
 <h1>
-	<img src="<?php echo esc_url( plugins_url( 'public//assets/img/bpt.png', dirname( __FILE__ ) ) )?>">
+	<img src="<?php echo esc_url( plugins_url( 'public/assets/img/bpt.png', dirname( __FILE__ ) ) )?>">
 </h1>
 
 <div class="wrap">
-	<div class="bpt-welcome-panel">
-		<div class="bpt-welcome-panel-content">
-		</div>
-		<div class="bpt-welcome-panel-content">
-			<h2>Please be aware that this plugin is a beta release. You may encounter errors and bugs.</h2>
-			<p>
-				If you are having issues with your Client ID or your Developer ID, please email <a href="mailto:support@brownpapertickets.com">support@brownpapertickets.com</a>.
-			</p>
+	<div class="welcome-panel">
+		<div class="welcome-panel-content">
+			<div id="greeting"></div>
+			<p class="about-description">Please be aware that this plugin is a beta release. You may encounter errors and bugs.</p>
+			<div class="welcome-panel-column-container">
 
-			<h3>
-				If you would like to request a new feature or if you have encountered a bug, please go <a target="_blank" href="https://github.com/BrownPaperTickets/brown-paper-tickets-wordpress/issues/new">here</a></span> to open up a new issue.
-			</h3>
+				<div class="welcome-panel-column">
+					<h4>Account Issues</h4>
+					<p>
+						If you are having issues with your Client or Developer ID, please email <a href="mailto:support@brownpapertickets.com?subject=WordPress Plugin Client ID">support@brownpapertickets.com</a>.
+					</p>
+					<p>
+						<a
+							class="button button-primary button-large load-customize"
+							target="_blank"
+							href="mailto:support@brownpapertickets.com?subject=WordPress Plugin Client ID"
+						>
+						 <span class="bpt-icon dashicons dashicons-email"></span> Email Support
+						</a>
+					</p>
+				</div>
+				<div class="welcome-panel-column">
+					<h4>Bug Reports and Feature Requests</h4>
+					<p>
+						Bug reports should be reported on the GitHub issue tracker page. This allows us to keep development of the plugin and issue reporting tightly synced.
+					</p>
+					<p>
+						However, if it is urget (the plugin breaks your site or throws exceptions), you may email <a href="labs@brownpapertickets.com?subject=Plugin Broken">labs@brownpapertickets.com</a>.
+					</p>
+					<p>
+						<strong>Feature Requests are welcome.</strong> If the request is possible and reasonable, it will most likely be added in a future release.
+					</p>
+					<p>
+						<a
+							class="button button-primary button-large load-customize"
+							target="_blank"
+							href="https://github.com/BrownPaperTickets/brown-paper-tickets-wordpress/issues/new?title=<?php esc_html_e( 'v' . $plugin_version ); ?> - Your Bug Here&labels=bug"
+						>
+							Submit Bug
+						</a>
+						<a
+							class="button button-primary button-large load-customize"
+							target="_blank"
+							href="https://github.com/BrownPaperTickets/brown-paper-tickets-wordpress/issues/new?&labels=feature request"
+						>
+							Request Feature
+						</a>
+					</p>
+				</div>
+			</div>
 		</div>
-		<span class="bpt-welcome-info-plugin-info">Plugin Info: <?php esc_html_e( $plugin_slug . ' v' . $plugin_version ); ?> - <a class="bpt-submit-issue" target="_blank" href="https://github.com/BrownPaperTickets/brown-paper-tickets-wordpress/issues/new">Submit Bug</a></span>
 	</div>
 	<nav id="<?php esc_attr_e( $menu_slug );?>">
 		<ul>
@@ -152,8 +190,11 @@ $plugin_version = BPTPlugin::get_plugin_version();
 
 <script type="text/ractive" id="bpt-welcome-panel-template">
 	{{ #account }}
-	<h1>Hi, {{ firstName }}</h1>
+	<h3>Hi, {{ firstName }}</h3>
 	{{ /account}}
+	{{ ^account }}
+	<h3>Thanks for using Brown Paper Tickets.</h3>
+	{{ /account }}
 	<div class="bpt-status-box">
 
 	</div>

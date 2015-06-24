@@ -25,7 +25,7 @@ class Api extends \BrownPaperTickets\Modules\ModuleApi {
 		}
 
 		if ( isset( $_POST['clientID'] ) &&  $_POST['clientID'] !== '' ) {
-			$client_id = $_POST['clientID'];
+			$client_id = filter_var( $_POST['clientID'], FILTER_SANITIZE_NUMBER_INT );
 		}
 
 		$events = new \BrownPaperTickets\APIv2\EventInfo( $this->dev_id );
