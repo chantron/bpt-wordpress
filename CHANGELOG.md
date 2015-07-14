@@ -1,5 +1,12 @@
 # Changelog
 
+### v0.6.2
+Merging in pull requests from [razordaze](https://github.com/razordaze):
+* Added address fields to calendar event response and widget.
+* Minor CSS fixes/improvements.
+* Minor tool tip correction.
+* Small Template Update to price list table headers.
+
 ### v0.6.1
 * Updated BptAPI library to fix an issue that caused the API to reject requests.
 
