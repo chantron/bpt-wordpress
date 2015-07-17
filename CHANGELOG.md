@@ -1,5 +1,10 @@
 # Changelog
 
+### v0.6.3
+
+#### Bug Fixes
+* Fixed issue where the account_test would throw an invalid argument error if the API library doesn't find any events. Fixes #23
+
 ### v0.6.2
 Merging in pull requests from [razordaze](https://github.com/razordaze):
 * Added address fields to calendar event response and widget.
