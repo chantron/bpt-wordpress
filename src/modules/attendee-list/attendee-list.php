@@ -60,12 +60,14 @@ class AttendeeList extends \BrownPaperTickets\Modules\Module {
 		$localized_variables = array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'nonce' => wp_create_nonce( 'bpt-attendee-list-nonce' ),
+			'dateFormat' => get_option( self::$setting_prefix . 'date_format' ),
+			'timeFormat' => get_option( self::$setting_prefix . 'time_format' ),
 		);
 
 		wp_register_script(
 			'attendee_list_js',
 			plugins_url( '/assets/js/attendee-list.js', __FILE__ ),
-			array( 'jquery' ),
+			array( 'jquery', 'moment_with_langs_min' ),
 			null,
 			true
 		);

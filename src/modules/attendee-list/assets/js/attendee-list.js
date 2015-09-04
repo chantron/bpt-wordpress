@@ -21,8 +21,17 @@
         eventSelectView,
         dateSelectView,
         attendeeListView,
-        resetState;
+        resetState,
+        formatTime,
+        formatDate;
 
+    formatTime = function formatTime(time) {
+        return moment(time, 'H:mm').format(bptAttendeeList.timeFormat);
+    }
+
+    formatDate = function formatTime(date) {
+        return moment(date, 'YYYY-MM-DD').format(bptAttendeeList.dateFormat);
+    }
 
     loadEvents = function() {
         $.ajax(bptAttendeeList.ajaxurl, getEventsOptions)
@@ -84,12 +93,15 @@
         }
     });
 
+
     dateSelectView = new Ractive({
         el: '#date-select',
         template: $('#date-select-template').html(),
         data: {
             dates: [],
             selected: [],
+            formatTime: formatTime,
+            formatDate: formatDate,
         }
     });
 
@@ -126,7 +138,9 @@
                 }
 
                 return false;
-            }
+            },
+            formatTime: formatTime,
+            formatDate: formatDate,
         }
     });
 

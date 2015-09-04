@@ -36,7 +36,7 @@
 			for="date-{{id}}"
 			class="date-select"
 		>
-			{{dateStart}} - {{timeStart}}
+			{{formatDate(dateStart)}} - {{ formatTime(timeStart) }}
 			<input
 				id="date-{{id}}"
 				type="checkbox"
@@ -57,7 +57,7 @@
 {{#if dates.length}}
 <h2>Attendees</h2>
 {{#dates:i}}
-	<h3>{{dateStart}} - {{ timeStart }}</h3>
+	<h3>{{formatDate(dateStart)}} - {{ formatTime(timeStart) }}</h3>
 	{{#attendees}}
 		{{#if inDate(this, dates[i]) }}
 
