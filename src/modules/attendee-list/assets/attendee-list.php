@@ -1,8 +1,8 @@
 <div class="form-table">
 	<div id="event-select"></div>
-	<br><br>
+	<br>
 	<div id="date-select"></div>
-	<br><br>
+	<br>
 	<div id="attendees"></div>
 </div>
 <!-- The event selector -->
@@ -58,14 +58,14 @@
 <h2>Attendees</h2>
 {{#dates:i}}
 	<h3>{{formatDate(dateStart)}} - {{ formatTime(timeStart) }}</h3>
-	{{#attendees}}
+	{{#attendees:i2}}
 		{{#if inDate(this, dates[i]) }}
-
+		<div class="attendee-row-{{i2 % 2 === 1 ? 'odd' : 'even'}}">
 				<h4>{{firstName}} {{lastName}}</h4>
 				<table>
 					<thead>
 
-							<th>Price Name</th>
+							<th>Admission Level</th>
 							<th>Ticket Number</th>
 							<th>Section</th>
 							<th>Row</th>
@@ -74,17 +74,18 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>{{priceID}}</td>
+							<td>{{priceName(priceID)}}</td>
 							<td>{{ticketNumber}}</td>
-							<td>{{section}}</td>
+							<td>{{section || "N/A"}}</td>
 							<td>{{row || "N/A"}}</td>
-							<td>{{seat}}</td>
+							<td>{{seat || "N/A"}}</td>
 						</tr>
 					</tbody>
 				</table>
-
+		</div>
 		{{/if}}
 	{{/attendees}}
+	<hr>
 {{/dates}}
 {{/if}}
 </script>

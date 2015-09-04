@@ -93,6 +93,22 @@
         }
     });
 
+    eventSelectView.getPriceObject = function getPriceObject(id) {
+        var events = this.get('events');
+
+        for (var i = 0; i < events.length; i++) {
+            console.log('events');
+            for (var i2 = 0; i2 < events[i].dates.length; i2++) {
+                console.log(events[i].dates[i2]);
+                for (var i3 = 0; i3 < events[i].dates[i2].prices.length; i3++) {
+                    console.log('prices');
+                    if (events[i].dates[i2].prices[i3].id === id) {
+                        return events[i].dates[i2].prices[i3];
+                    }
+                }
+            }
+        }
+    };
 
     dateSelectView = new Ractive({
         el: '#date-select',
@@ -141,6 +157,10 @@
             },
             formatTime: formatTime,
             formatDate: formatDate,
+            priceName: function(id) {
+                var price = eventSelectView.getPriceObject(id);
+                return price.name;
+            }
         }
     });
 

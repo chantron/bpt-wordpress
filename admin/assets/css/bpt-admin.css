@@ -231,3 +231,11 @@ div#bpt-appearance-help-calendar {
 #attendees .form-table th {
     padding-bottom: 0;
 }
+
+.attendee-row-even {
+
+}
+
+.attendee-row-odd {
+    background-color: #F9F9F9;
+}

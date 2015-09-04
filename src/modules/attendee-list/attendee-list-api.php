@@ -12,7 +12,7 @@ class Api extends \BrownPaperTickets\Modules\ModuleApi {
 	{
 		$api = new \BrownPaperTickets\APIv2\EventInfo( $this->dev_id );
 
-		return $api->getEvents( $this->client_id, null, true, false );
+		return $api->getEvents( $this->client_id, null, true, true );
 	}
 
 	public function get_attendees($event = null) {
