@@ -19,6 +19,8 @@ require_once( plugin_dir_path( __FILE__ ).'../src/modules/event-list/event-list.
 require_once( plugin_dir_path( __FILE__ ).'../src/modules/calendar/calendar.php' );
 require_once( plugin_dir_path( __FILE__ ).'../src/modules/help/help.php' );
 
+require_once( plugin_dir_path( __FILE__ ).'../src/modules/attendee-list/attendee-list.php' );
+
 use BrownPaperTickets\BPTSettingsFields;
 use BrownPaperTickets\BPTAjaxActions;
 use BrownPaperTickets\BPTWidgets;
@@ -43,6 +45,7 @@ class BPTPlugin {
 	protected static $purcahse;
 	protected static $event_list;
 	protected static $help;
+	protected static $attendee_list;
 
 	public function __construct() {
 
@@ -65,11 +68,16 @@ class BPTPlugin {
 		self::$purcahse = new Modules\Purchase;
 		self::$event_list = new Modules\EventList;
 		self::$help = new Modules\Help;
+		self::$attendee_list = new Modules\AttendeeList;
 
 	}
 
+	/**
+	 * Get an instance of the main plugin.
+	 * @return BrownPaperTickets\BPTPlugin
+	 */
 	public static function get_instance() {
-		if ( null == self::$instance ) {
+		if ( null === self::$instance ) {
 			self::$instance = new self;
 		}
 
@@ -106,6 +114,7 @@ class BPTPlugin {
 			$purchase = new Modules\Purchase;
 			$event_list = new Modules\EventList;
 			$help = new Modules\Help;
+			$attendee_list = new Modules\AttendeeList;
 
 			$calendar->activate();
 			$account->activate();
@@ -113,6 +122,7 @@ class BPTPlugin {
 			$purchase->activate();
 			$event_list->activate();
 			$help->activate();
+			$attendee_list->activate();
 		}
 	}
 
@@ -248,6 +258,7 @@ class BPTPlugin {
 		self::$event_list->load_settings();
 		self::$help->load_settings();
 		self::$calendar->load_settings();
+		self::$attendee_list->load_settings();
 	}
 
 	public function bpt_show_wizard() {

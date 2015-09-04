@@ -50,10 +50,14 @@ class Ajax {
 		}
 
 		if ( ! get_transient( '_bpt_event_list_events' . $post_id ) ) {
-			set_transient( '_bpt_event_list_events' . $post_id, $events->get_events( $client_id, $event_id ), Utilities::cache_time() );
+			set_transient(
+				'_bpt_event_list_events' . $post_id,
+				$events->get_events( $client_id, $event_id ),
+				Utilities::cache_time()
+			);
 		}
 
-		$events = get_transient( '_bpt_event_list_events' . $post_id  );
+		$events = get_transient( '_bpt_event_list_events' . $post_id );
 
 		if ( $event_id ) {
 			$single_event = self::get_single_event( $event_id, $events );

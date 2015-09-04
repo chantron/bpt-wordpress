@@ -20,6 +20,7 @@
         this.events = events;
         this.currentEvents = currentEvents;
 
+        Ractive.DEBUG = false;
         /**
          * This is the Ractive Template that displays the
          * event details.

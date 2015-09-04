@@ -36,6 +36,7 @@ $plugin_version = BPTPlugin::get_plugin_version();
 			<li><a class="bpt-admin-tab" href="#general-settings">General Settings</a></li>
 			<li><a class="bpt-admin-tab" href="#event-settings">Event List Settings</a></li>
 			<li><a class="bpt-admin-tab" href="#calendar-settings">Calendar Settings</a></li>
+			<li><a class="bpt-admin-tab" href="#attendee-list">Attendees</a></li>
 			<li><a class="bpt-admin-tab" href="#appearance-settings">Appearance</a></li>
 			<?php echo ( is_ssl() ? '<li><a class="bpt-admin-tab" href="#purchase-settings">Purchase Settings</a></li>' : '' ); ?>
 			<li><a class="bpt-admin-tab" href="#help">Help</a></li>
@@ -99,6 +100,9 @@ $plugin_version = BPTPlugin::get_plugin_version();
 				<?php do_settings_sections( $menu_slug . '_general' ); ?>
 				<input name="Submit" type="submit" class="button-primary" value="<?php esc_attr_e( 'Save Changes' ); ?>" />
 			</div>
+		</div>
+		<div id="attendee-list">
+			<?php do_settings_sections( $menu_slug . '_attendee_list' ); ?>
 		</div>
 		<div id="event-settings">
 			<div>

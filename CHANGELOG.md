@@ -1,5 +1,13 @@
 # Changelog
 
+### v0.7.0
+
+#### New Features
+* Added attendee lists
+
+#### Misc
+* Updated Ractive to v0.7.3
+
 ### v0.6.3
 
 #### Bug Fixes
