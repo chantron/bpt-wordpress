@@ -2,15 +2,33 @@
 
 ### v0.7.0
 
+#### New Features
+* Added attendee lists
+
 #### Improvments
-* Reworked the welcome message on the plugin settings to match the native WordPress dashboard styles.
+* Admin UI refactoring. The BPT Settings sections have been split up into
+individual pages and kept as native WordPress as possible. This should hopefully
+improve use on mobile and in general.
 
 #### Bug Fixes
 * Fixed issue where plugin would redirect super admin to plugin settings page upon network activation.
 
 #### Other
+* Updated Ractive to v0.7.3
 * Swapped icon of the BPT Settings menu.
 
+### v0.6.3
+
+#### Bug Fixes
+* Fixed issue where the account_test would throw an invalid argument error if the API library doesn't find any events. Fixes #23
+
+### v0.6.2
+Merging in pull requests from [razordaze](https://github.com/razordaze):
+* Added address fields to calendar event response and widget.
+* Minor CSS fixes/improvements.
+* Minor tool tip correction.
+* Small Template Update to price list table headers.
+>>>>>>> attendee-list
 
 ### v0.6.1
 * Updated BptAPI library to fix an issue that caused the API to reject requests.

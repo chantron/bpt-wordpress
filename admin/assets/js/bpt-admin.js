@@ -348,6 +348,8 @@
         $('a#get-all-options').click(admin.getAllOptions);
         $('a#test-api').click(admin.testApi);
 
+        Ractive.DEBUG = false;
+
         bptWelcomePanel = new Ractive({
             el: '#greeting',
             template: '#bpt-welcome-panel-template',

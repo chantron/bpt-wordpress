@@ -17,6 +17,7 @@
 			setPriceIntervals,
 			toggleFee;
 
+		Ractive.DEBUG = false;
 		eventList = new Ractive({
 			el: '#bpt-event-list-' + postID,
 			template: '#bpt-event-template',
@@ -76,7 +77,7 @@
 						return;
 					}
 
-					return this.data.formatPrice(fee, currency);
+					return formatPrice(fee, currency);
 				},
 				priceValue: function(price) {
 					var value = price.value;
@@ -205,18 +206,12 @@
 					}
 
 					if ( !data.error ) {
-						eventList.set(
-							{
-								events: data,
-							}
-						);
+						eventList.set('events', data);
 
-						// eventList.data.events.each(function(i, event) {
+						var events = eventList.get('events');
 
-						// });
-						//
-						for (var i = 0; i < eventList.data.events.length; i++) {
-							var currentEvent = eventList.data.events[i];
+						for (var i = 0; i < events.length; i++) {
+							var currentEvent = events[i];
 							eventList.set('events[' + i +'].selectedDate', currentEvent.dates[0]);
 						}
 

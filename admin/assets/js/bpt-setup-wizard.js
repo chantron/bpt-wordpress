@@ -55,14 +55,14 @@
                 }
 
                 if (data.account.result || data.events.result) {
-                    
+
                     if (data.account.result) {
                         bptSetupWizard.set({
                             accountError: data.account
                         });
                     }
 
-                    if (data.events.result) {                    
+                    if (data.events.result) {
                         bptSetupWizard.set({
                             eventError: data.events
                         });
@@ -104,9 +104,9 @@
 
             })
             .always(function() {
-                
+
             });
-            
+
         },
         saveSettings: function saveSettings() {
             var settings = $('#bpt-setup-wizard-form').serialize();
@@ -133,18 +133,18 @@
     /**
      * bptWizardNav handles hiding/showing the previous/next element
      * named the same class.
-     * 
+     *
      * @param  string prevButton     The element you would like to use for the
      *                               next buttons.
      * @param  string nextButton     The element you would like to use for the
      *                               previous buttons.
-     * @param  string stepContainers The selector used for each step. 
+     * @param  string stepContainers The selector used for each step.
      * @return void
      */
     BptWizardNav = function BptWizardNav(prevButton, nextButton, stepContainers) {
 
         this.init = function init () {
-    
+
             var parent = this;
 
             this.setStepContainers(stepContainers);
@@ -172,9 +172,9 @@
                 parent.prevStep(currentStep);
             });
 
-            
+
         };
-        
+
         this.currentStep = 0;
 
         this.stepContainers = [];
@@ -227,7 +227,7 @@
     };
 
     $(document).ready(function() {
-
+        Ractive.DEBUG = false;
         bptSetupWizard = new Ractive({
             el: '#bpt-setup-wizard-response',
             template: '#bpt-setup-wizard-template',
@@ -270,7 +270,7 @@
                 liveEvents: function liveEvents(events) {
 
                     var live = 0;
-                    
+
                     for (var i = 0; i < events.length; i++ ) {
                         if (events[i].live) {
                             live++;

@@ -138,7 +138,7 @@ class Module {
 	}
 
 	public function render_menu() {
-
+		// require_once( __DIR__ . '/some/template-file.php' );
 	}
 
 }

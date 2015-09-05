@@ -24,7 +24,7 @@
  * Domain Path:       /languages
  */
 
-require_once( plugin_dir_path( __FILE__ ).'src/brown-paper-tickets-plugin.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'src/brown-paper-tickets-plugin.php' );
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
