@@ -13,6 +13,7 @@ use BrownPaperTickets\BPTPlugin;
 
 class Inputs {
 	public static function section() { ?>
+		<h1>Appearance</h1>
 		<p>You can add add Custom CSS to style the Event List and the Calendar Widget.</p>
 		<p class="description">See the Help tab on the top right of this screen for CSS selector info.</p>
 	<?php }

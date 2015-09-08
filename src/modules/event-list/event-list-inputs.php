@@ -13,6 +13,10 @@ use BrownPaperTickets\BPTPlugin;
 use BrownPaperTickets\BptWordpress as Utils;
 
 class Inputs {
+	public function section()
+	{
+
+	}
 
 	public function show_dates() {
 		?>
@@ -21,14 +25,9 @@ class Inputs {
 			<label for="show-dates-true">Yes</label>
 			<input id="show-dates-false" name="_bpt_show_dates" <?php esc_attr_e( Utils::is_selected( 'false', '_bpt_show_dates', 'checked' ) ); ?> value="false" type="radio" />
 			<label for="show-dates-false">No</label>
-			<div class="<?php esc_attr_e( BPTPlugin::get_menu_slug() ); ?>_help">
-				<span>?</span>
-				<div>
-					<p>
-						This option determines whether or not your event's dates will appear in your event listing.
-					</p>
-				</div>
-			</div>
+			<p class="description">
+				Show the event's dates.
+			</p>
 		</div>
 
 		<?php
@@ -42,14 +41,9 @@ class Inputs {
 			<label for="show-prices-true">Yes</label>
 			<input id="show-prices-false" name="_bpt_show_prices" <?php esc_attr_e( Utils::is_selected( 'false', '_bpt_show_prices', 'checked' ) ); ?> value="false" type="radio" />
 			<label for="show-prices-false">No</label>
-			<div class="<?php esc_attr_e( BPTPlugin::get_menu_slug() ); ?>_help">
-				<span>?</span>
-				<div>
-					<p>
-						This option determines whether or not your event's prices will appear in your event listing.
-					</p>
-				</div>
-			</div>
+			<p class="description">
+				This option determines whether or not your event's prices will appear in your event listing.
+			</p>
 		</div>
 
 		<?php
@@ -63,14 +57,9 @@ class Inputs {
 			<label for="show-end-time-true">Yes</label>
 			<input id="show-end-time-false" name="_bpt_show_end_time" <?php esc_attr_e( Utils::is_selected( 'false', '_bpt_show_end_time', 'checked' ) ); ?> value="false" type="radio" />
 			<label for="show-end-time-false">No</label>
-			<div class="<?php esc_attr_e( BPTPlugin::get_menu_slug() ); ?>_help">
-				<span>?</span>
-				<div>
-					<p>
-						This option determines whether or not to show your event's end time.
-					</p>
-				</div>
-			</div>
+			<p class="description">
+				This option determines whether or not to show your event's end time.
+			</p>
 		</div>
 
 		<?php
@@ -101,20 +90,9 @@ class Inputs {
 		?>
 			</select>
 			<input class="hidden" id="custom-date-format-input" name="_bpt_custom_date_format" type="text" value="<?php esc_attr_e( get_option( '_bpt_custom_date_format' ) ); ?>" />
-			<div class="<?php esc_attr_e( BPTPlugin::get_menu_slug() ); ?>_help">
-				<span>?</span>
-				<div>
-					<p>
-						This option will determine the format that your event's dates will appear in.
-					</p>
-					<p>
-						Choose from a set of predefined options or set your own
-					</p>
-					<p>
-						If you set a custom option, see <a href="http://momentjs.com/docs/#/displaying/format/" target="_blank">Moment.js documentation</a> for all of the potential parameters.
-					</p>
-				</div>
-			</div>
+			<p class="description">
+				Choose from predefined options or set your own. See <a href="http://momentjs.com/docs/#/displaying/format/" target="_blank">Moment.js documentation</a> for all of the potential parameters.
+			</p>
 		</div>
 		<?php
 	}
@@ -159,17 +137,9 @@ class Inputs {
 		?>
 			</select>
 			<input class="hidden" id="custom-time-format-input" name="_bpt_custom_time_format" type="text" value="<?php echo esc_attr_e( get_option( '_bpt_custom_time_format' ) ); ?>" />
-			<div class="<?php esc_attr_e( BPTPlugin::get_menu_slug() ); ?>_help">
-				<span>?</span>
-				<div>
-					<p>
-						This option determines the format you wish your dates to appear in.
-					</p>
-					<p>
-						If you set a custom option, see <a href="http://momentjs.com/docs/#/displaying/format/" target="_blank">Moment.js documentation</a> for all of the potential parameters.
-					</p>
-				</div>
-			</div>
+			<p class="description">
+				Choose from predefined options or set your own. See <a href="http://momentjs.com/docs/#/displaying/format/" target="_blank">Moment.js documentation</a> for all of the potential parameters.
+			</p>
 		</div>
 		<?php
 	}
@@ -189,27 +159,9 @@ class Inputs {
 			<label for="mobile">Mobile</label>
 			<input id="mobile" value="mobile" name="_bpt_shipping_methods[]"  type="checkbox" <?php esc_attr_e( Utils::is_selected( 'mobile', '_bpt_shipping_methods', 'checked' ) );?>/>
 
-			<div class="<?php esc_attr_e( BPTPlugin::get_menu_slug() ); ?>_help">
-				<span>?</span>
-				<div>
-					<p>
-						<h4>This plugin has no way to determine which shipping options are available for your events.</h3>
-					</p>
-					<p>
-						<h4>You must ensure that the options you select here are actually enabled on your event</h3>
-					</p>
-					<p>
-						Select the shipping methods you wish to display for your events.
-						<ul>
-							<li>Print at Home - This method allows ticket buyers to print their tickets at home. No Fee</li>
-							<li>Will Call - This method allows the ticket buyer to pick up their tickets at the box office prior to the show. No fee</li>
-							<li>Physical - This method will allow physical tickets to be shipped to the ticket buyer, fulfilled by Brown Paper Tickets. Fee. </li>
-							<li>Mobile - This method will send the user a text message with their ticket purchase allowing producers who use the Brown Paper Tickets Mobile Scanner App to scan tickets at the door.</li>
-						</ul>
-					</p>
-				</div>
-			</div>
-
+			<p class="description">
+				See the "Shipping Methods" section in the help menu (top right) for full information.
+			</p>
 		</div>
 		<?php
 	}
@@ -229,15 +181,9 @@ class Inputs {
 				?>
 
 			</select>
-
-			<div class="<?php esc_attr_e( BPTPlugin::get_menu_slug() ); ?>_help">
-				<span>?</span>
-				<div>
-					<p>
-					   The countries you wish to allow shipping to and from.
-					</p>
-				</div>
-			</div>
+			<p class="description">
+			   The country that is selected by default in the shipping options.
+			</p>
 		</div>
 		<?php
 	}
@@ -251,15 +197,9 @@ class Inputs {
 				<option value="gbp" <?php esc_attr_e( Utils::is_selected( 'gbp', '_bpt_currency', 'selected' ) );?>>GBP £</option>
 				<option value="eur" <?php esc_attr_e( Utils::is_selected( 'eur', '_bpt_currency', 'selected' ) );?>>EUR €</option>
 			</select>
-
-			<div class="<?php esc_attr_e( BPTPlugin::get_menu_slug() ); ?>_help">
-				<span>?</span>
-				<div>
-					<p>
-					   The your event's prices should be displayed in.
-					</p>
-				</div>
-			</div>
+			<p class="description">
+			   Set the currency to be displayed.
+			</p>
 		</div>
 		<?php
 	}
@@ -272,15 +212,6 @@ class Inputs {
 				<option value="value_asc" <?php esc_attr_e( Utils::is_selected( 'value_asc', '_bpt_price_sort', 'selected' ) );?>>Price Value - Low to High</option>
 				<option value="value_desc" <?php esc_attr_e( Utils::is_selected( 'value_desc', '_bpt_price_sort', 'selected' ) );?>>Price Value - High to Low</option>
 			</select>
-
-			<div class="<?php esc_attr_e( BPTPlugin::get_menu_slug() ); ?>_help">
-				<span>?</span>
-				<div>
-					<p>
-					   The order by which you wish to display prices.
-					</p>
-				</div>
-			</div>
 		</div>
 		<?php
 	}
@@ -293,14 +224,9 @@ class Inputs {
 			<label for="show-full-description-true">Yes</label>
 			<input id="show-full-description-false" name="_bpt_show_full_description" <?php esc_attr_e( Utils::is_selected( 'false', '_bpt_show_full_description', 'checked' ) ); ?> value="false" type="radio" />
 			<label for="show-full-description-false">No</label>
-			<div class="<?php esc_attr_e( BPTPlugin::get_menu_slug() ); ?>_help">
-				<span>?</span>
-				<div>
-					<p>
-						This option determines whether or not to show the full description by default.
-					</p>
-				</div>
-			</div>
+			<p class="description">
+				If set to "no", the event's full description will be hidden behind a "show description" toggle.
+			</p>
 		</div>
 
 		<?php
@@ -314,14 +240,9 @@ class Inputs {
 			<label for="show-location-after-description-true">Yes</label>
 			<input id="show-location-after-description-false" name="_bpt_show_location_after_description" <?php esc_attr_e( Utils::is_selected( 'false', '_bpt_show_location_after_description', 'checked' ) ); ?> value="false" type="radio" />
 			<label for="show-location-after-description-false">No</label>
-			<div class="<?php esc_attr_e( BPTPlugin::get_menu_slug() ); ?>_help">
-				<span>?</span>
-				<div>
-					<p>
-						This option determines whether or not to show location after the description, rather than before it.
-					</p>
-				</div>
-			</div>
+			<p class="description">
+				Select "no" if you want the event's location to appear below the event description.
+			</p>
 		</div>
 
 		<?php
@@ -335,14 +256,9 @@ class Inputs {
 			<label for="show-past-dates-true">Yes</label>
 			<input id="show-past-dates-false" name="_bpt_show_past_dates" <?php esc_attr_e( Utils::is_selected( 'false', '_bpt_show_past_dates', 'checked' ) ); ?> value="false" type="radio" />
 			<label for="show-past-dates-false">No</label>
-			<div class="<?php esc_attr_e( BPTPlugin::get_menu_slug() ); ?>_help">
-				<span>?</span>
-				<div>
-					<p>
-						If you would like to show past dates, select yes.
-					</p>
-				</div>
-			</div>
+			<p class="description">
+				If you would like to show past dates, select yes.
+			</p>
 		</div>
 
 		<?php
@@ -356,14 +272,6 @@ class Inputs {
 			<label for="show-sold-out-dates-true">Yes</label>
 			<input id="show-sold-out-dates-false" name="_bpt_show_sold_out_dates" <?php esc_attr_e( Utils::is_selected( 'false', '_bpt_show_sold_out_dates', 'checked' ) ); ?> value="false" type="radio" />
 			<label for="show-sold-out-dates-false">No</label>
-			<div class="<?php esc_attr_e( BPTPlugin::get_menu_slug() ); ?>_help">
-				<span>?</span>
-				<div>
-					<p>
-						If you would like to show sold out dates, select yes.
-					</p>
-				</div>
-			</div>
 		</div>
 
 		<?php
@@ -377,14 +285,9 @@ class Inputs {
 			<label for="show-sold-out-prices-true">Yes</label>
 			<input id="show-sold-out-prices-false" name="_bpt_show_sold_out_prices" <?php esc_attr_e( Utils::is_selected( 'false', '_bpt_show_sold_out_prices', 'checked' ) ); ?> value="false" type="radio" />
 			<label for="show-sold-out-prices-false">No</label>
-			<div class="<?php esc_attr_e( BPTPlugin::get_menu_slug() ); ?>_help">
-				<span>?</span>
-				<div>
-					<p>
-						If you would like to show sold out prices, select yes.
-					</p>
-				</div>
-			</div>
+			<p class="description">
+				If you would like to show sold out prices, select yes.
+			</p>
 		</div>
 
 		<?php
@@ -398,15 +301,8 @@ class Inputs {
 			<label for="include-service-fee-true">Yes</label>
 			<input id="include-service-fee-true" name="_bpt_include_service_fee" <?php esc_attr_e( Utils::is_selected( 'false', '_bpt_include_service_fee', 'checked' ) ); ?> value="false" type="radio" />
 			<label for="include-service-fee-true">No</label>
-			<div class="<?php esc_attr_e( BPTPlugin::get_menu_slug() ); ?>_help">
-				<span>?</span>
-				<div>
-					<p>
-						If you would like to include the Brown Paper Tickets service fees in your price total, select true.
-					</p>
-				</div>
-			</div>
-			<p class="bpt-help">This will override any individual price's service fee setting.</p>
+			<p class="description">If you would like to include the Brown Paper Tickets service fees in your price total, select true.</p>
+			<p class="description">This will override any individual price's service fee setting.</p>
 		</div>
 		<?php
 	}
@@ -450,7 +346,7 @@ class Inputs {
 						<td><?php esc_html_e( $hidden_price['eventId'] ); ?></td>
 						<td><?php esc_html_e( $hidden_price['priceId'] ); ?></td>
 						<td>
-							<a href="" class="bpt-unhide-price" data-price-id="<?php esc_html_e( $hidden_price['priceId'] ); ?>">
+							<a href="" class="button bpt-unhide-price" data-price-id="<?php esc_html_e( $hidden_price['priceId'] ); ?>">
 							Display Price</a>
 						</td>
 					</tr>

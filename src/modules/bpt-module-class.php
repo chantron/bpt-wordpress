@@ -14,7 +14,7 @@ use BrownPaperTickets\BptWordpress as Utilities;
 
 class Module {
 
-	protected static $menu_slug = null;
+	public static $menu_slug = null;
 	protected static $plugin_root;
 	protected static $setting_prefix = '_bpt_';
 	static $section_title;

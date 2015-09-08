@@ -39,13 +39,13 @@ $plugin_version = BPTPlugin::get_plugin_version();
 				<div class="welcome-panel-column">
 					<h4>Bug Reports and Feature Requests</h4>
 					<p>
-						Bug reports should be reported on the GitHub issue tracker page. This allows us to keep development of the plugin and issue reporting tightly synced.
+						<strong>Bug reports</strong> should be reported on the GitHub issue tracker page. This allows us to keep development of the plugin and issue reporting tightly synced.
 					</p>
 					<p>
 						However, if it is urget (the plugin breaks your site or throws exceptions), you may email <a href="labs@brownpapertickets.com?subject=Plugin Broken">labs@brownpapertickets.com</a>.
 					</p>
 					<p>
-						<strong>Feature Requests are welcome.</strong> If the request is possible and reasonable, it will most likely be added in a future release.
+						<strong>Feature Requests</strong> are welcome. If the request is possible and reasonable, it will most likely be added in a future release.
 					</p>
 					<p>
 						<a
@@ -53,7 +53,7 @@ $plugin_version = BPTPlugin::get_plugin_version();
 							target="_blank"
 							href="https://github.com/BrownPaperTickets/brown-paper-tickets-wordpress/issues/new?title=<?php esc_html_e( 'v' . $plugin_version ); ?> - Your Bug Here&labels=bug"
 						>
-							Submit Bug
+							<span class="bpt-icon dashicons dashicons-info"></span> Submit Bug
 						</a>
 						<a
 							class="button button-primary button-large load-customize"
@@ -69,13 +69,7 @@ $plugin_version = BPTPlugin::get_plugin_version();
 	</div>
 	<nav id="<?php esc_attr_e( $menu_slug );?>">
 		<ul>
-			<li><a class="bpt-admin-tab" href="#usage">Usage</a></li>
-			<li><a class="bpt-admin-tab" href="#account-setup">Account Setup</a></li>
-			<li><a class="bpt-admin-tab" href="#general-settings">General Settings</a></li>
-			<li><a class="bpt-admin-tab" href="#event-settings">Event List Settings</a></li>
-			<li><a class="bpt-admin-tab" href="#calendar-settings">Calendar Settings</a></li>
-			<li><a class="bpt-admin-tab" href="#attendee-list">Attendees</a></li>
-			<li><a class="bpt-admin-tab" href="#appearance-settings">Appearance</a></li>
+			<li class="selected-tab"><a class="bpt-admin-tab" href="#usage">Usage</a></li>
 			<?php echo ( is_ssl() ? '<li><a class="bpt-admin-tab" href="#purchase-settings">Purchase Settings</a></li>' : '' ); ?>
 			<li><a class="bpt-admin-tab" href="#help">Help</a></li>
 			<li><a class="bpt-admin-tab" href="#credits">Credits</a></li>
@@ -124,47 +118,7 @@ $plugin_version = BPTPlugin::get_plugin_version();
 			<h2>Widgets</h2>
 			<ul>
 				<li>Calendar Widget. Display Events in a Calendar. Go to <a href="widgets.php">Widgets to enable.</a></li>
-
 			</ul>
-		</div>
-		<div id="account-setup">
-			<div>
-				<?php do_settings_sections( $menu_slug . '_api' ); ?>
-				<input name="Submit" type="submit" class="button-primary" value="<?php esc_attr_e( 'Save Changes' ); ?>" />
-			</div>
-		</div>
-		<div id="general-settings">
-			<div>
-				<?php do_settings_sections( $menu_slug . '_general' ); ?>
-				<input name="Submit" type="submit" class="button-primary" value="<?php esc_attr_e( 'Save Changes' ); ?>" />
-			</div>
-		</div>
-		<div id="attendee-list">
-			<?php do_settings_sections( $menu_slug . '_attendee_list' ); ?>
-		</div>
-		<div id="event-settings">
-			<div>
-				<?php do_settings_sections( $menu_slug . '_event' ); ?>
-				<input name="Submit" type="submit" class="button-primary" value="<?php esc_attr_e( 'Save Changes' ); ?>" />
-			</div>
-		</div>
-		<div id="calendar-settings">
-			<div>
-				<?php do_settings_sections( $menu_slug . '_calendar' ); ?>
-				<input name="Submit" type="submit" class="button-primary" value="<?php esc_attr_e( 'Save Changes' ); ?>" />
-			</div>
-		</div>
-		<div id="appearance-settings">
-			<div>
-				<?php do_settings_sections( $menu_slug . '_appearance' ); ?>
-				<input name="Submit" type="submit" class="button-primary" value="<?php esc_attr_e( 'Save Changes' ); ?>" />
-			</div>
-		</div>
-		<div id="purchase-settings">
-			<div>
-				<?php do_settings_sections( $menu_slug . '_purchase' ); ?>
-				<input name="Submit" type="submit" class="button-primary" value="<?php esc_attr_e( 'Save Changes' ); ?>" />
-			</div>
 		</div>
 		<div id="help">
 			<div>

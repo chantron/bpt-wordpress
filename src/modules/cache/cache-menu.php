@@ -4,7 +4,8 @@
 		<h2>
 			<img src="<?php echo esc_url( plugins_url( 'public/assets/img/bpt.png', self::$plugin_root ) )?>">
 		</h2>
+		<p>Enabling the cache will dramatically reduce the time it takes the plugin to load event data.</p>
 		<?php do_settings_sections( self::$menu_slug . self::$module_name ); ?>
-		<input name="Submit" type="submit" class="button-primary" value="<?php esc_attr_e( 'Save Appearance Settings' ); ?>" />
+		<input name="Submit" type="submit" class="button-primary" value="<?php esc_attr_e( 'Save Cache Settings' ); ?>" />
 	</form>
 </div>

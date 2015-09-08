@@ -185,15 +185,12 @@ class Ajax {
 		$nonce = $post['nonce'];
 
 		if ( isset( $post['admin'] ) ) {
-			$nonceTitle = 'bpt-admin-nonce';
-
+			$nonceTitle = 'event-list-admin';
 		} else {
-
 			$nonceTitle = 'bpt-event-list-nonce';
 		}
 
 		Utilities::check_nonce( $nonce, $nonceTitle );
-
 
 		if ( Utilities::is_user_an_admin() ) {
 

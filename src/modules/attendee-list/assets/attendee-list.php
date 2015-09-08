@@ -1,4 +1,7 @@
-<div class="form-table">
+<div id="attendee-list" class="form-table wrap">
+	<img src="<?php echo esc_url( plugins_url( 'public/assets/img/bpt.png', self::$plugin_root ) )?>">
+	<h1>Attendee Lists</h1>
+	<p>In order for this to work, the client ID you have set in the Account settings must in your authorized accounts.	</p>
 	<div id="event-select"></div>
 	<br>
 	<div id="date-select"></div>

@@ -1,6 +1,6 @@
 <?php
 
-namespace BrownPaperTickets\Modules\General;
+namespace BrownPaperTickets\Modules\Cache;
 
 require_once( plugin_dir_path( __FILE__ ).'../../../src/brown-paper-tickets-plugin.php');
 
@@ -8,9 +8,6 @@ use BrownPaperTickets\BPTPlugin as plugin;
 use BrownPaperTickets\bptWordpress as Utilities;
 
 class Inputs {
-	public static function section() {
-
-	}
 
 	public function cache_time() {
 		$increment  = 1;
@@ -19,8 +16,6 @@ class Inputs {
 
 		?>
 			<div class="cache-time-wrapper">
-				<p>Enabling caching of your event data will increase page load times.</p>
-				<p>By setting the time below, you will tell the plugin to save the event data to the database temporarily and to serve the event data from there, rather than having to pull it in through the Brown Paper Tickets API every page load</p>
 				<label for="cache-time-increment">Cache Time</label>
 				<select id="cache-time-increment" name="_bpt_cache_time">
 					<option value="false" <?php esc_attr_e( selected( $cache_time, '0' ) );?>>Do Not Cache</option>
@@ -38,23 +33,7 @@ class Inputs {
 					<option value="hours" <?php selected( $cache_unit, 'hours' ); ?>>Hours</option>
 					<option value="days" <?php selected( $cache_unit, 'days' ); ?>>Days</option>
 				</select>
-
-
-				<div class="<?php esc_attr_e( plugin::get_menu_slug() ); ?>_help">
-					<span>?</span>
-					<div>
-						<p>Select the amount of time you would like to cache your event data.</p>
-						<p>Setting this option will decrease the amount of time it takes for the data to load</p>
-						<p></p>
-					</div>
-				</div>
-
-				<div class="bpt-advanced-options">
-					<button class="button-large button" id="bpt-delete-cache">Delete Cache</button>
-					<img class="bpt-loading hidden" src="<?php echo esc_url( Utilities::plugin_root_url() . '/public/assets/img/loading.gif' ); ?>">
-					<p class="bpt-success-message hidden"></p>
-					<p class="bpt-error-message hidden"></p>
-				</div>
+				<button class="button-large button" id="delete-cache"><span id="message">Delete Cache</span></button>
 			</div>
 		<?php
 	}

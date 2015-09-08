@@ -24,6 +24,15 @@ input[type="file"] > input[type="button"]::-moz-focus-inner {
     text-align: center;
 }
 
+.button-alert {
+    background: #A00;
+    color: #fff;
+}
+
+.button-alert:hover {
+    background: #F00;
+}
+
 /**
  * Admin Navigation Tabs
  */
@@ -222,29 +231,4 @@ div#bpt-appearance-help-calendar {
     .bpt-icon {
         padding-top: 0;
     }
-}
-/**
- * Attendee List
- */
-
-.date-select {
-    display: inline-block;
-    font-size: 1rem;
-    margin: 5px;
-}
-
-#attendees h4 {
-    margin-bottom: 0;
-}
-
-#attendees .form-table th {
-    padding-bottom: 0;
-}
-
-.attendee-row-even {
-
-}
-
-.attendee-row-odd {
-    background-color: #F9F9F9;
 }

@@ -16,15 +16,9 @@ class Inputs {
 			<label for="show-upcoming-events-calendar-true">Yes</label>
 			<input id="show-upcoming-events-calendar-false" name="_bpt_show_upcoming_events_calendar" <?php esc_attr_e( Utilities::is_selected( 'false', '_bpt_show_upcoming_events_calendar', 'checked' ) ); ?> value="false" type="radio" />
 			<label for="show-upcoming-events-calendar-false">No</label>
-
-			<div class="<?php esc_attr_e( plugin::get_menu_slug() ); ?>_help">
-				<span>?</span>
-				<div>
-					<p>
-						If you would like to show upcoming events in the calendar, select yes.
-					</p>
-				</div>
-			</div>
+			<p class="description">
+				If set to "yes", the calendar will display the closest upcoming events if there aren't any in the current month.
+			</p>
 		</div>
 		<?php
 	}

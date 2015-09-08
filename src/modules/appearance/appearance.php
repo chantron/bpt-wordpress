@@ -6,34 +6,37 @@ require_once( plugin_dir_path( __FILE__ ).'/appearance-inputs.php' );
 
 class Appearance extends Module {
 
+	protected static $module_name = '_appearance';
+
 	public function register_settings() {
-		register_setting( self::$menu_slug, self::$setting_prefix . 'event_list_style' );
-		register_setting( self::$menu_slug, self::$setting_prefix . 'calendar_style' );
+		register_setting( self::$menu_slug . self::$module_name, self::$setting_prefix . 'event_list_style' );
+		register_setting( self::$menu_slug . self::$module_name, self::$setting_prefix . 'calendar_style' );
 	}
 
 	public function register_sections() {
 
 		$inputs = new Appearance\Inputs;
+
 		add_settings_section(
 			'Appearance',
-			'Appearance',
+			null,
 			array( $inputs, 'section' ),
 			self::$menu_slug . '_appearance'
 		);
 
 		add_settings_field(
-			self::$setting_prefix . 'event_list_style', // The ID of the input.
+			self::$setting_prefix . 'event_list_style' . self::$module_name, // The ID of the input.
 			'Event List', // The title of the field.
 			array( $inputs, 'event_list' ), // Event HTML callback
-			self::$menu_slug . '_appearance', // The settings page.
+			self::$menu_slug . self::$module_name, // The settings page.
 			'Appearance' // The section that the field will be rendered in.
 		);
 
 		add_settings_field(
-			self::$setting_prefix . 'calendar_style',
+			self::$setting_prefix . 'calendar_style' . self::$module_name,
 			'Calendar',
 			array( $inputs, 'calendar' ),
-			self::$menu_slug . '_appearance', // The settings page.
+			self::$menu_slug . self::$module_name, // The settings page.
 			'Appearance' // The section that the field will be rendered in.
 		);
 	}

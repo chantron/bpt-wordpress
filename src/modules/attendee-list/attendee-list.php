@@ -9,7 +9,6 @@
 namespace BrownPaperTickets\Modules;
 
 require_once( plugin_dir_path( __FILE__ ) . '../bpt-module-class.php' );
-require_once( plugin_dir_path( __FILE__ ) . 'attendee-list-menu.php' );
 require_once( plugin_dir_path( __FILE__ ) . 'attendee-list-ajax.php' );
 
 /**
@@ -21,7 +20,7 @@ class AttendeeList extends \BrownPaperTickets\Modules\Module {
 	 * Give the section a unique suffixe.
 	 * @var string
 	 */
-	static $section_suffix = '_attendee_list';
+	static $page_suffix = '_attendee_list';
 
 	/**
 	 * This module has just one section. Give it a name.
@@ -37,21 +36,25 @@ class AttendeeList extends \BrownPaperTickets\Modules\Module {
 			self::$section_title,
 			self::$section_title,
 			array( 'BrownPaperTickets\Modules\AttendeeList\Menu', 'render' ),
-			self::$menu_slug . self::$section_suffix
+			self::$menu_slug . self::$page_suffix
 		);
 	}
 
 	public function load_menus() {
 		$page = add_submenu_page(
-			self::$menu_slug,  //or 'options.php'
+			self::$menu_slug,  // Or 'options.php'.
 			'Brown Paper Tickets Attendee List',
 			'Attendee List',
 			'manage_options',
-			self::$menu_slug . '_attendee_list',
-			array( 'BrownPaperTickets\Modules\AttendeeList\Menu', 'render' )
+			self::$menu_slug . self::$page_suffix,
+			array( $this, 'render_menu' )
 		);
 
 		add_action( 'load-' . $page, array( $this, 'add_help' ) );
+	}
+
+	public function render_menu() {
+		require_once( __DIR__ . '/assets/attendee-list.php' );
 	}
 
 	public function add_help() {
@@ -85,11 +88,21 @@ class AttendeeList extends \BrownPaperTickets\Modules\Module {
 	}
 
 	public function load_admin_js($hook) {
+
+		if ( 'bpt-settings_page_brown_paper_tickets_settings_attendee_list' !== $hook ) {
+			return;
+		}
+
 		$localized_variables = array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'nonce' => wp_create_nonce( 'bpt-attendee-list-nonce' ),
 			'dateFormat' => get_option( self::$setting_prefix . 'date_format' ),
 			'timeFormat' => get_option( self::$setting_prefix . 'time_format' ),
+		);
+
+		wp_register_style(
+			'attendee_list_css',
+			plugins_url( '/assets/css/attendee-list.css', __FILE__ )
 		);
 
 		wp_register_script(
@@ -107,5 +120,6 @@ class AttendeeList extends \BrownPaperTickets\Modules\Module {
 		);
 
 		wp_enqueue_script( 'attendee_list_js' );
+		wp_enqueue_style( 'attendee_list_css' );
 	}
 }

@@ -10,13 +10,14 @@ require_once( plugin_dir_path( __FILE__ ).'../lib/bptWordpress.php' );
 /**
  * Load Modules
  */
-require_once( plugin_dir_path( __FILE__ ).'../src/modules/general/general.php' );
+require_once( plugin_dir_path( __FILE__ ).'../src/modules/cache/cache.php' );
 require_once( plugin_dir_path( __FILE__ ).'../src/modules/account/account.php' );
 require_once( plugin_dir_path( __FILE__ ).'../src/modules/appearance/appearance.php' );
 require_once( plugin_dir_path( __FILE__ ).'../src/modules/purchase/purchase.php' );
 require_once( plugin_dir_path( __FILE__ ).'../src/modules/event-list/event-list.php' );
 require_once( plugin_dir_path( __FILE__ ).'../src/modules/calendar/calendar.php' );
 require_once( plugin_dir_path( __FILE__ ).'../src/modules/help/help.php' );
+require_once( plugin_dir_path( __FILE__ ).'../src/modules/setup-wizard/setup-wizard.php' );
 
 require_once( plugin_dir_path( __FILE__ ).'../src/modules/attendee-list/attendee-list.php' );
 
@@ -42,14 +43,6 @@ class BPTPlugin {
 	protected static $modules = array();
 	protected static $plugin_version;
 	protected static $instance = null;
-	protected static $calendar;
-	protected static $general;
-	protected static $account;
-	protected static $appearance;
-	protected static $purcahse;
-	protected static $event_list;
-	protected static $help;
-	protected static $attendee_list;
 
 	public function __construct() {
 
@@ -67,14 +60,15 @@ class BPTPlugin {
 			$this->load_admin();
 		}
 
-		self::$modules['general'] = new Modules\General();
-		self::$modules['calendar'] =  new Modules\Calendar();
 		self::$modules['account'] = new Modules\Account();
 		self::$modules['appearance'] = new Modules\Appearance();
-		self::$modules['purchase'] = new Modules\Purchase();
+		self::$modules['cache'] = new Modules\Cache();
+		self::$modules['calendar'] =  new Modules\Calendar();
 		self::$modules['event_list'] = new Modules\EventList();
-		self::$modules['help'] = new Modules\Help();
+		self::$modules['purchase'] = new Modules\Purchase();
 		self::$modules['attendee-list'] = new Modules\AttendeeList();
+		self::$modules['help'] = new Modules\Help();
+		self::$modules['setup-wizard'] = new Modules\SetupWizard();
 	}
 
 	/**
@@ -160,9 +154,16 @@ class BPTPlugin {
 
 	public function load_admin_scripts( $hook ) {
 
+		wp_register_style(
+			'bpt_admin_css',
+			plugins_url( '/admin/assets/css/bpt-admin.css', dirname( __FILE__ ) ),
+			null,
+			BPT_VERSION
+		);
+
 		if ( $hook === 'toplevel_page_brown_paper_tickets_settings' ) {
 
-			wp_enqueue_style( 'bpt_admin_css', plugins_url( '/admin/assets/css/bpt-admin.css', dirname( __FILE__ ) ), false, BPT_VERSION );
+			wp_enqueue_style( 'bpt_admin_css' );
 
 			wp_enqueue_script(
 				'bpt_admin_js',
@@ -186,7 +187,7 @@ class BPTPlugin {
 		}
 
 		if ( $hook === 'bpt-settings_page_brown_paper_tickets_settings_setup_wizard' ) {
-			wp_enqueue_style( 'bpt_admin_css', plugins_url( '/admin/assets/css/bpt-admin.css', dirname( __FILE__ ) ), false, BPT_VERSION );
+			wp_enqueue_style( 'bpt_admin_css' );
 
 			wp_enqueue_style( 'bpt_setup_wizard_css', plugins_url( '/admin/assets/css/bpt-setup-wizard.css', dirname( __FILE__ ) ), false, BPT_VERSION );
 
@@ -234,36 +235,23 @@ class BPTPlugin {
 
 		add_submenu_page(
 			'brown_paper_tickets_settings',  //or 'options.php'
-			'General',
-			'General',
+			'Brown Paper Tickets Dashboard',
+			'Dashboard',
 			'manage_options',
 			self::$menu_slug,
 			array( $this, 'render_bpt_options_page' )
 		);
 
-		add_submenu_page(
-			self::$menu_slug,  //or 'options.php'
-			'Brown Paper Tickets Setup Wizard',
-			'Setup Wizard',
-			'manage_options',
-			self::$menu_slug . '_setup_wizard',
-			array( $this, 'render_bpt_setup_wizard_page' )
-		);
-
-		foreach (self::$modules as $module) {
+		foreach ( self::$modules as $module ) {
 			$module->load_settings();
 		}
 	}
 
 	public function bpt_show_wizard() {
-
 		if ( get_option( '_bpt_show_wizard' ) === 'true' ) {
-
-
 			if ( ! is_multisite() ) {
 				update_option( '_bpt_show_wizard', 'false' );
 				wp_redirect( 'admin.php?page=brown_paper_tickets_settings_setup_wizard' );
-
 			}
 		}
 	}
