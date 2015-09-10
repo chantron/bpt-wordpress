@@ -15,7 +15,7 @@ require_once( 'calendar-inputs.php' );
 
 class Calendar extends Module {
 
-	protected static $module_name = '_calendar';
+	public static $module_name = '_calendar';
 
 	public function init_actions() {
 		add_action( 'widgets_init', array( $this, 'load_widgets' ) );

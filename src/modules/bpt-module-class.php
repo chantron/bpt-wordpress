@@ -7,13 +7,13 @@
  */
 namespace BrownPaperTickets\Modules;
 
-require_once( plugin_dir_path( __FILE__ ).'../brown-paper-tickets-plugin.php');
+require_once( plugin_dir_path( __FILE__ ).'../brown-paper-tickets-plugin.php' );
 
 use BrownPaperTickets\BPTPlugin;
 use BrownPaperTickets\BptWordpress as Utilities;
 
 class Module {
-
+	public static $module_name;
 	public static $menu_slug = null;
 	protected static $plugin_root;
 	protected static $setting_prefix = '_bpt_';
@@ -42,6 +42,10 @@ class Module {
 
 		$this->load_public_ajax_actions();
 		$this->load_shortcode();
+	}
+
+	public function get_module_name() {
+
 	}
 
 	public function init_actions() {

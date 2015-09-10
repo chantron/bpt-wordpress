@@ -8,7 +8,7 @@ require_once( plugin_dir_path( __FILE__ ).'/cache-inputs.php' );
 
 class Cache extends Module {
 
-	protected static $module_name = '_cache';
+	public static $module_name = '_cache';
 
 	public function register_sections() {
 

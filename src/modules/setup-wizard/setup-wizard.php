@@ -5,7 +5,7 @@ require_once( plugin_dir_path( __FILE__ ).'../bpt-module-class.php' );
 
 class SetupWizard extends Module {
 
-	protected static $module_name = '_setup_wizard';
+	public static $module_name = '_setup_wizard';
 
 
 	public function load_menus() {

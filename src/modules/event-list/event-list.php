@@ -14,7 +14,7 @@ require_once( plugin_dir_path( __FILE__ ) . '/event-list-help.php' );
  */
 class EventList extends \BrownPaperTickets\Modules\Module {
 
-	static $module_name = '_event';
+	public static $module_name = '_event';
 
 	private static $event_section_title  = 'Event Display Settings';
 	private static $date_section_title  = 'Date Display Settings';
@@ -152,14 +152,33 @@ class EventList extends \BrownPaperTickets\Modules\Module {
 
 		$input = new EventList\Inputs;
 
-		add_settings_section( self::$event_section_title, self::$event_section_title, array($input, 'section'),
-		self::$menu_slug . self::$module_name );
-		add_settings_section( self::$date_section_title, self::$date_section_title, null,
-		self::$menu_slug . self::$module_name );
-		add_settings_section( self::$price_section_title, self::$price_section_title, null,
-		self::$menu_slug . self::$module_name );
-		add_settings_section( self::$hidden_prices_section_title, self::$hidden_prices_section_title, null,
-		self::$menu_slug . self::$module_name );
+		add_settings_section(
+			self::$event_section_title,
+			self::$event_section_title,
+			array($input, 'section'),
+			self::$menu_slug . self::$module_name
+		);
+
+		add_settings_section(
+			self::$date_section_title,
+			self::$date_section_title,
+			null,
+			self::$menu_slug . self::$module_name
+		);
+
+		add_settings_section(
+			self::$price_section_title,
+			self::$price_section_title,
+			null,
+			self::$menu_slug . self::$module_name
+		);
+
+		add_settings_section(
+			self::$hidden_prices_section_title,
+			self::$hidden_prices_section_title,
+			null,
+			self::$menu_slug . self::$module_name
+		);
 
 		// Add the settings fields.
 		// Event Fields
@@ -168,19 +187,22 @@ class EventList extends \BrownPaperTickets\Modules\Module {
 			self::$setting_prefix . 'show_full_description',
 			'Display Full Description by Default',
 			array( $input, 'show_full_description' ),
-			self::$menu_slug . self::$module_name, self::$event_section_title );
+			self::$menu_slug . self::$module_name, self::$event_section_title
+		);
 
 		add_settings_field(
 			self::$setting_prefix . 'show_location_after_description',
 			'Display Location After Description',
 			array( $input, 'show_location_after_description' ),
-			self::$menu_slug . self::$module_name, self::$event_section_title );
+			self::$menu_slug . self::$module_name, self::$event_section_title
+		);
 
 		add_settings_field(
 			self::$setting_prefix . 'sort_events',
 			'Sort Events',
 			array( $input, 'sort_events' ),
-			self::$menu_slug . self::$module_name, self::$event_section_title );
+			self::$menu_slug . self::$module_name, self::$event_section_title
+		);
 
 		// Date Fields
 
@@ -290,7 +312,7 @@ class EventList extends \BrownPaperTickets\Modules\Module {
 		update_option( self::$setting_prefix . 'show_full_description', 'false' );
 		update_option( self::$setting_prefix . 'show_location_after_description', 'false' );
 
-		// Date Settings
+		// Date Settings.
 		update_option( self::$setting_prefix . 'show_dates', 'true' );
 		update_option( self::$setting_prefix . 'date_format', 'MMMM Do, YYYY' );
 		update_option( self::$setting_prefix . 'time_format', 'hh:mm A' );
@@ -298,7 +320,7 @@ class EventList extends \BrownPaperTickets\Modules\Module {
 		update_option( self::$setting_prefix . 'show_past_dates', 'false' );
 		update_option( self::$setting_prefix . 'show_end_time', 'true' );
 
-		// Price Settings
+		// Price Settings.
 		update_option( self::$setting_prefix . 'show_prices', 'true' );
 		update_option( self::$setting_prefix . 'shipping_methods', array( 'print_at_home', 'will_call' ) );
 		update_option( self::$setting_prefix . 'shipping_countries', 'United States' );
@@ -351,7 +373,6 @@ class EventList extends \BrownPaperTickets\Modules\Module {
 			'wp_ajax_nopriv_bpt_get_events', array( 'BrownPaperTickets\Modules\EventList\Ajax', 'get_events' )
 		);
 	}
-
 
 	public function load_menus() {
 		$page = add_submenu_page(

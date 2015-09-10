@@ -6,7 +6,7 @@ require_once( plugin_dir_path( __FILE__ ).'/appearance-inputs.php' );
 
 class Appearance extends Module {
 
-	protected static $module_name = '_appearance';
+	public static $module_name = '_appearance';
 
 	public function register_settings() {
 		register_setting( self::$menu_slug . self::$module_name, self::$setting_prefix . 'event_list_style' );

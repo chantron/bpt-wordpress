@@ -66,9 +66,9 @@ class BPTPlugin {
 		self::$modules['calendar'] =  new Modules\Calendar();
 		self::$modules['event_list'] = new Modules\EventList();
 		self::$modules['purchase'] = new Modules\Purchase();
-		self::$modules['attendee-list'] = new Modules\AttendeeList();
+		self::$modules['attendee_list'] = new Modules\AttendeeList();
 		self::$modules['help'] = new Modules\Help();
-		self::$modules['setup-wizard'] = new Modules\SetupWizard();
+		self::$modules['setup_wizard'] = new Modules\SetupWizard();
 	}
 
 	/**
@@ -93,6 +93,10 @@ class BPTPlugin {
 
 	public static function get_menu_slug() {
 		return self::$menu_slug;
+	}
+
+	public static function get_modules() {
+		return self::$modules;
 	}
 
 	public static function activate() {
@@ -161,22 +165,23 @@ class BPTPlugin {
 			BPT_VERSION
 		);
 
+		wp_register_script(
+			'bpt_admin_js',
+			plugins_url( '/admin/assets/js/bpt-admin.js', dirname( __FILE__ ) ),
+			array(
+				'jquery',
+				'ractive_js',
+				'ractive_transitions_slide_js',
+				'moment_with_langs_min',
+			),
+			BPT_VERSION,
+			true
+		);
+
 		if ( $hook === 'toplevel_page_brown_paper_tickets_settings' ) {
 
 			wp_enqueue_style( 'bpt_admin_css' );
-
-			wp_enqueue_script(
-				'bpt_admin_js',
-				plugins_url( '/admin/assets/js/bpt-admin.js', dirname( __FILE__ ) ),
-				array(
-					'jquery',
-					'ractive_js',
-					'ractive_transitions_slide_js',
-					'moment_with_langs_min',
-				),
-				true,
-				true
-			);
+			wp_enqueue_script( 'bpt_admin_js' );
 
 			wp_localize_script(
 				'bpt_admin_js', 'bptWP', array(

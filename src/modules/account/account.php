@@ -9,7 +9,7 @@ require_once( plugin_dir_path( __FILE__ ) . '/account-help.php' );
 
 class Account extends Module {
 
-	protected static $module_name = '_api';
+	public static $module_name = '_api';
 
 	public function load_admin_ajax_actions() {
 		add_action( 'wp_ajax_bpt_get_account', array( 'BrownPaperTickets\Modules\Account\Ajax', 'get_account' ) );
