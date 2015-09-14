@@ -5,54 +5,54 @@
 
 namespace BrownPaperTickets;
 
-require_once( plugin_dir_path( __FILE__ ).'../lib/bptWordpress.php' );
+require_once( plugin_dir_path( __FILE__ ) . '../lib/bptWordpress.php' );
 
 /**
  * Load Modules
+ *
+ * @todo Switch over to some autoloader.
  */
-require_once( plugin_dir_path( __FILE__ ).'../src/modules/cache/cache.php' );
-require_once( plugin_dir_path( __FILE__ ).'../src/modules/account/account.php' );
-require_once( plugin_dir_path( __FILE__ ).'../src/modules/appearance/appearance.php' );
-require_once( plugin_dir_path( __FILE__ ).'../src/modules/purchase/purchase.php' );
-require_once( plugin_dir_path( __FILE__ ).'../src/modules/event-list/event-list.php' );
-require_once( plugin_dir_path( __FILE__ ).'../src/modules/calendar/calendar.php' );
-require_once( plugin_dir_path( __FILE__ ).'../src/modules/help/help.php' );
-require_once( plugin_dir_path( __FILE__ ).'../src/modules/setup-wizard/setup-wizard.php' );
+require_once( plugin_dir_path( __FILE__ ) . '../src/modules/cache/cache.php' );
+require_once( plugin_dir_path( __FILE__ ) . '../src/modules/account/account.php' );
+require_once( plugin_dir_path( __FILE__ ) . '../src/modules/appearance/appearance.php' );
+require_once( plugin_dir_path( __FILE__ ) . '../src/modules/purchase/purchase.php' );
+require_once( plugin_dir_path( __FILE__ ) . '../src/modules/event-list/event-list.php' );
+require_once( plugin_dir_path( __FILE__ ) . '../src/modules/calendar/calendar.php' );
+require_once( plugin_dir_path( __FILE__ ) . '../src/modules/setup-wizard/setup-wizard.php' );
+require_once( plugin_dir_path( __FILE__ ) . '../src/modules/dashboard/dashboard.php' );
 
-require_once( plugin_dir_path( __FILE__ ).'../src/modules/attendee-list/attendee-list.php' );
+require_once( plugin_dir_path( __FILE__ ) . '../src/modules/attendee-list/attendee-list.php' );
 
 use BrownPaperTickets\BPTSettingsFields;
 use BrownPaperTickets\BPTAjaxActions;
 use BrownPaperTickets\BPTWidgets;
 use BrownPaperTickets\BptWordpress as Utilities;
 
-
-
 const BPT_VERSION = '0.7.0';
 const PLUGIN_SLUG = 'brown_paper_tickets';
 
 class BPTPlugin {
+	protected static $instance = null;
 
-	static $menu_slug;
-	static $plugin_root;
+	public $menu_slug;
+	public $plugin_root;
 
 	protected $settings_fields;
 
-	protected static $plugin_slug;
+	protected $plugin_slug;
 
-	protected static $modules = array();
-	protected static $plugin_version;
-	protected static $instance = null;
+	protected $modules = array();
+	protected $plugin_version;
 
 	public function __construct() {
 
-		self::$menu_slug = PLUGIN_SLUG . '_settings';
+		$this->plugin_slug = PLUGIN_SLUG;
 
-		self::$plugin_slug = PLUGIN_SLUG;
+		$this->menu_slug = PLUGIN_SLUG . '_settings';
 
-		self::$plugin_version = BPT_VERSION;
+		$this->plugin_version = BPT_VERSION;
 
-		self::$plugin_root = dirname( __FILE__ );
+		$this->plugin_root = dirname( __FILE__ );
 
 		$this->load_shared();
 
@@ -60,15 +60,15 @@ class BPTPlugin {
 			$this->load_admin();
 		}
 
-		self::$modules['account'] = new Modules\Account();
-		self::$modules['appearance'] = new Modules\Appearance();
-		self::$modules['cache'] = new Modules\Cache();
-		self::$modules['calendar'] =  new Modules\Calendar();
-		self::$modules['event_list'] = new Modules\EventList();
-		self::$modules['purchase'] = new Modules\Purchase();
-		self::$modules['attendee_list'] = new Modules\AttendeeList();
-		self::$modules['help'] = new Modules\Help();
-		self::$modules['setup_wizard'] = new Modules\SetupWizard();
+		$this->modules['dashboard'] = new Modules\Dashboard();
+		$this->modules['account'] = new Modules\Account();
+		$this->modules['appearance'] = new Modules\Appearance();
+		$this->modules['cache'] = new Modules\Cache();
+		$this->modules['calendar'] =  new Modules\Calendar();
+		$this->modules['event_list'] = new Modules\EventList();
+		$this->modules['purchase'] = new Modules\Purchase();
+		$this->modules['attendee_list'] = new Modules\AttendeeList();
+		$this->modules['setup_wizard'] = new Modules\SetupWizard();
 	}
 
 	/**
@@ -83,23 +83,23 @@ class BPTPlugin {
 		return self::$instance;
 	}
 
-	public static function get_plugin_slug() {
-		return self::$plugin_slug;
+	public function get_plugin_slug() {
+		return $this->plugin_slug;
 	}
 
-	public static function get_plugin_version() {
-		return self::$plugin_version;
+	public function get_plugin_version() {
+		return $this->plugin_version;
 	}
 
-	public static function get_menu_slug() {
-		return self::$menu_slug;
+	public function get_menu_slug() {
+		return $this->menu_slug;
 	}
 
-	public static function get_modules() {
-		return self::$modules;
+	public function get_modules() {
+		return $this->modules;
 	}
 
-	public static function activate() {
+	public function activate() {
 		if ( ! current_user_can( 'activate_plugins' ) ) {
 			return;
 		}
@@ -111,13 +111,13 @@ class BPTPlugin {
 		if ( ! get_option( '_bpt_dev_id' ) && ! get_option( '_bpt_client_id' ) ) {
 			update_option( '_bpt_show_wizard', 'true' );
 
-			foreach (self::$modules as $module) {
+			foreach ($this->modules as $module) {
 				$module->activate();
 			}
 		}
 	}
 
-	public static function deactivate() {
+	public function deactivate() {
 		if ( ! current_user_can( 'activate_plugins' ) ) {
 			return;
 		}
@@ -129,7 +129,7 @@ class BPTPlugin {
 		}
 	}
 
-	public static function uninstall() {
+	public function uninstall() {
 
 		if ( ! current_user_can( 'activate_plugins' ) ) {
 			return;
@@ -154,72 +154,14 @@ class BPTPlugin {
 
 	public function load_shared() {
 		add_action( 'init', array( $this, 'register_js_libs' ) );
+		add_action( 'init', array( $this, 'register_css_libs' ) );
 	}
 
 	public function load_admin_scripts( $hook ) {
 
-		wp_register_style(
-			'bpt_admin_css',
-			plugins_url( '/admin/assets/css/bpt-admin.css', dirname( __FILE__ ) ),
-			null,
-			BPT_VERSION
-		);
-
-		wp_register_script(
-			'bpt_admin_js',
-			plugins_url( '/admin/assets/js/bpt-admin.js', dirname( __FILE__ ) ),
-			array(
-				'jquery',
-				'ractive_js',
-				'ractive_transitions_slide_js',
-				'moment_with_langs_min',
-			),
-			BPT_VERSION,
-			true
-		);
-
-		if ( $hook === 'toplevel_page_brown_paper_tickets_settings' ) {
-
-			wp_enqueue_style( 'bpt_admin_css' );
-			wp_enqueue_script( 'bpt_admin_js' );
-
-			wp_localize_script(
-				'bpt_admin_js', 'bptWP', array(
-					'ajaxurl' => admin_url( 'admin-ajax.php' ),
-					'nonce' => wp_create_nonce( 'bpt-admin-nonce' ),
-				)
-			);
-		}
-
-		if ( $hook === 'bpt-settings_page_brown_paper_tickets_settings_setup_wizard' ) {
-			wp_enqueue_style( 'bpt_admin_css' );
-
-			wp_enqueue_style( 'bpt_setup_wizard_css', plugins_url( '/admin/assets/css/bpt-setup-wizard.css', dirname( __FILE__ ) ), false, BPT_VERSION );
-
-			wp_enqueue_script(
-				'bpt_setup_wizard_js',
-				plugins_url( '/admin/assets/js/bpt-setup-wizard.js', dirname( __FILE__ ) ),
-				array(
-					'jquery',
-					'ractive_js',
-					'ractive_transitions_slide_js',
-					'moment_with_langs_min',
-				),
-				true,
-				true
-			);
-
-			wp_localize_script(
-				'bpt_setup_wizard_js', 'bptSetupWizardAjax',
-				array(
-					'ajaxurl' => admin_url( 'admin-ajax.php' ),
-					'nonce' => wp_create_nonce( 'bpt-admin-nonce' ),
-				)
-			);
-		}
 	}
 
-	public static function register_js_libs()
+	public function register_js_libs()
 	{
 		wp_register_script( 'ractive_js', plugins_url( '/public/assets/js/lib/ractive.min.js', dirname( __FILE__ ) ), array(), false, true );
 		wp_register_script( 'ractive_transitions_slide_js', plugins_url( '/public/assets/js/lib/ractive-transitions-slide.js', dirname( __FILE__ ) ), array( 'ractive_js' ), false, true );
@@ -228,26 +170,18 @@ class BPTPlugin {
 		wp_register_script( 'clndr_min_js', plugins_url( 'public/assets/js/lib/clndr.min.js', dirname( __FILE__ ) ), array( 'underscore', 'jquery' ), false, true );
 	}
 
+	public function register_css_libs()
+	{
+		wp_register_style(
+			'bpt_admin_css',
+			plugins_url( '/admin/assets/css/bpt-admin.css', dirname( __FILE__ ) ),
+			null,
+			BPT_VERSION
+		);
+	}
+
 	public function create_bpt_settings() {
-		add_menu_page(
-			'Brown Paper Tickets',
-			'BPT Settings',
-			'administrator',
-			self::$menu_slug,
-			array( $this, 'render_bpt_options_page' ),
-			'dashicons-tickets-alt'
-		);
-
-		add_submenu_page(
-			'brown_paper_tickets_settings',  //or 'options.php'
-			'Brown Paper Tickets Dashboard',
-			'Dashboard',
-			'manage_options',
-			self::$menu_slug,
-			array( $this, 'render_bpt_options_page' )
-		);
-
-		foreach ( self::$modules as $module ) {
+		foreach ( $this->modules as $module ) {
 			$module->load_settings();
 		}
 	}
@@ -264,7 +198,7 @@ class BPTPlugin {
 	/**
 	 * Delete all _bpt_ options directly from the database.
 	 */
-	private static function delete_options() {
+	private function delete_options() {
 
 		global $wpdb;
 
@@ -284,14 +218,6 @@ class BPTPlugin {
 				delete_option( $option_name );
 			}
 		}
-	}
-
-	public function render_bpt_options_page() {
-		require_once( plugin_dir_path( __FILE__ ) . '../admin/bpt-settings.php' );
-	}
-
-	public function render_bpt_setup_wizard_page() {
-		require_once( plugin_dir_path( __FILE__ ) . '../admin/bpt-setup-wizard.php' );
 	}
 
 }

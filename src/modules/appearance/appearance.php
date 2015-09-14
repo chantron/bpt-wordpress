@@ -6,11 +6,11 @@ require_once( plugin_dir_path( __FILE__ ).'/appearance-inputs.php' );
 
 class Appearance extends Module {
 
-	public static $module_name = '_appearance';
+	public $module_name = '_appearance';
 
 	public function register_settings() {
-		register_setting( self::$menu_slug . self::$module_name, self::$setting_prefix . 'event_list_style' );
-		register_setting( self::$menu_slug . self::$module_name, self::$setting_prefix . 'calendar_style' );
+		register_setting( $this->menu_slug . $this->module_name, $this->setting_prefix . 'event_list_style' );
+		register_setting( $this->menu_slug . $this->module_name, $this->setting_prefix . 'calendar_style' );
 	}
 
 	public function register_sections() {
@@ -21,32 +21,32 @@ class Appearance extends Module {
 			'Appearance',
 			null,
 			array( $inputs, 'section' ),
-			self::$menu_slug . '_appearance'
+		 $this->menu_slug . '_appearance'
 		);
 
 		add_settings_field(
-			self::$setting_prefix . 'event_list_style' . self::$module_name, // The ID of the input.
+		 $this->setting_prefix . 'event_list_style' . $this->module_name, // The ID of the input.
 			'Event List', // The title of the field.
 			array( $inputs, 'event_list' ), // Event HTML callback
-			self::$menu_slug . self::$module_name, // The settings page.
+		 $this->menu_slug . $this->module_name, // The settings page.
 			'Appearance' // The section that the field will be rendered in.
 		);
 
 		add_settings_field(
-			self::$setting_prefix . 'calendar_style' . self::$module_name,
+		 $this->setting_prefix . 'calendar_style' . $this->module_name,
 			'Calendar',
 			array( $inputs, 'calendar' ),
-			self::$menu_slug . self::$module_name, // The settings page.
+		 $this->menu_slug . $this->module_name, // The settings page.
 			'Appearance' // The section that the field will be rendered in.
 		);
 	}
 
 	public function set_default_setting_values() {
 		$event_list_options = get_option(
-			self::$setting_prefix . 'event_list_style'
+		 $this->setting_prefix . 'event_list_style'
 		);
 
-		$calendar_options = self::$menu_slug . self::$setting_prefix . 'calendar_style';
+		$calendar_options = $this->menu_slug . $this->setting_prefix . 'calendar_style';
 
 		if ( ! $event_list_options ) {
 			$event_list_options = array(
@@ -54,7 +54,7 @@ class Appearance extends Module {
 				'custom_css' => '',
 			);
 
-			update_option( self::$menu_slug . self::$setting_prefix . 'event_list_style', $event_list_options );
+			update_option( $this->menu_slug . $this->setting_prefix . 'event_list_style', $event_list_options );
 		}
 
 		if ( ! $calendar_options ) {
@@ -63,22 +63,22 @@ class Appearance extends Module {
 				'custom_css' => '',
 			);
 
-			update_option( self::$menu_slug . self::$setting_prefix . 'calendar_style', $calendar_options );
+			update_option( $this->menu_slug . $this->setting_prefix . 'calendar_style', $calendar_options );
 		}
 	}
 
 	public function remove_setting_values() {
-		delete_option( self::$menu_slug . self::$setting_prefix . 'calendar_style' );
-		delete_option( self::$menu_slug . self::$setting_prefix . 'event_list_style' );
+		delete_option( $this->menu_slug . $this->setting_prefix . 'calendar_style' );
+		delete_option( $this->menu_slug . $this->setting_prefix . 'event_list_style' );
 	}
 
 	public function load_menus() {
 		$page = add_submenu_page(
-			self::$menu_slug,  //or 'options.php'
+		 $this->menu_slug,  //or 'options.php'
 			'Brown Paper Tickets Appearance',
 			'Appearance',
 			'manage_options',
-			self::$menu_slug . '_appearance',
+		 $this->menu_slug . '_appearance',
 			array( $this, 'render_menu' )
 		);
 

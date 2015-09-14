@@ -8,12 +8,12 @@ use \BrownPaperTickets\BptWordpress as Utilities;
 
 class Ajax {
 
-	private static $nonce_title = 'bpt-event-list-nonce';
+	private $nonce_title = 'bpt-event-list-nonce';
 
 	/**
 	 * Get the Events
 	 */
-	public static function get_events() {
+	public function get_events() {
 		$get = filter_input_array( INPUT_GET, FILTER_SANITIZE_ENCODED );
 		$nonce	 = $get['nonce'];
 		$post_id   = null;
@@ -37,14 +37,14 @@ class Ajax {
 			$widget_id = $post['widgetID'];
 		}
 
-		Utilities::check_nonce( $nonce, self::$nonce_title );
+		Utilities::check_nonce( $nonce, $this->nonce_title );
 
 		$events = new Api;
 
 		if ( ! Utilities::cache_enabled() ) {
 			$events = $events->get_events( $client_id, $event_id );
-			$events = self::sort_events( $events );
-			$events = self::apply_price_options( $events );
+			$events = $this->sort_events( $events );
+			$events = $this->apply_price_options( $events );
 
 			wp_send_json( $events, true );
 		}
@@ -60,7 +60,7 @@ class Ajax {
 		$events = get_transient( '_bpt_event_list_events' . $post_id );
 
 		if ( $event_id ) {
-			$single_event = self::get_single_event( $event_id, $events );
+			$single_event = $this->get_single_event( $event_id, $events );
 
 			if ( ! $single_event ) {
 				wp_send_json( array( 'success' => false, 'error' => 'Could not find event.' ) );
@@ -69,8 +69,8 @@ class Ajax {
 			$events = array( $single_event );
 		}
 
-		$events = self::sort_events( $events );
-		$events = self::apply_price_options( $events );
+		$events = $this->sort_events( $events );
+		$events = $this->apply_price_options( $events );
 
 		wp_send_json( $events );
 	}
@@ -81,7 +81,7 @@ class Ajax {
 	 * @param  mixed $events Either a json string or an array of events.
 	 * @return mixed			Returns the single event array or false if no event.
 	 */
-	private static function get_single_event( $event_id, $events ) {
+	private function get_single_event( $event_id, $events ) {
 		if ( is_string( $events ) ) {
 			$events = json_decode( $events, true );
 		}
@@ -97,7 +97,7 @@ class Ajax {
 		return $single_event;
 	}
 
-	public static function hide_prices() {
+	public function hide_prices() {
 		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_ENCODED);
 		$response = array();
 		$nonce = $post['nonce'];
@@ -179,8 +179,11 @@ class Ajax {
 		wp_send_json( $response );
 	}
 
-	public static function unhide_prices() {
-		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_ENCODED);
+	/**
+	 * This unhides the given prices. A events array needs to be posted to this.
+	 */
+	public function unhide_prices() {
+		$post = filter_input_array( INPUT_POST, FILTER_SANITIZE_ENCODED );
 		$response = array();
 		$nonce = $post['nonce'];
 
@@ -228,7 +231,10 @@ class Ajax {
 		wp_send_json( $response );
 	}
 
-	public static function set_price_max_quantity() {
+	/**
+	 * This sets a prices max quantity to whatever is passed.
+	 */
+	public function set_price_max_quantity() {
 		$post = filter_input_array( INPUT_POST, FILTER_SANITIZE_ENCODED );
 		if ( isset( $post['maxQuantity'] ) ) {
 			$max_quantity = get_option( '_bpt_price_max_quantity' );
@@ -261,7 +267,7 @@ class Ajax {
 		wp_send_json_error( 'Unable to update price quantity.' );
 	}
 
-	public static function set_price_intervals() {
+	public function set_price_intervals() {
 		$post = filter_input_array( INPUT_POST, FILTER_SANITIZE_ENCODED );
 
 		if ( isset( $post['intervals'] ) ) {
@@ -299,7 +305,7 @@ class Ajax {
 		wp_send_json_error( 'Unable to update price interval.' );
 	}
 
-	public static function set_price_include_fee() {
+	public function set_price_include_fee() {
 
 		$post = filter_input_array( INPUT_POST, FILTER_SANITIZE_ENCODED );
 
@@ -348,7 +354,7 @@ class Ajax {
 		wp_send_json_error( 'Unable to update price interval.' );
 	}
 
-	private static function sort_events( $events ) {
+	private function sort_events( $events ) {
 		$sort = get_option( '_bpt_sort_events' );
 
 		if ( $sort ) {
@@ -403,16 +409,16 @@ class Ajax {
 		return $events;
 	}
 
-	private static function apply_price_options( $events ) {
+	private function apply_price_options( $events ) {
 
-		$events = self::filter_hidden_prices( $events );
-		$events = self::apply_max_quantity( $events );
-		$events = self::apply_intervals( $events );
-		$events = self::apply_include_fee( $events );
+		$events = $this->filter_hidden_prices( $events );
+		$events = $this->apply_max_quantity( $events );
+		$events = $this->apply_intervals( $events );
+		$events = $this->apply_include_fee( $events );
 		return $events;
 	}
 
-	private static function apply_max_quantity( $events ) {
+	private function apply_max_quantity( $events ) {
 		if ( $max_quantity = get_option( '_bpt_price_max_quantity' ) ) {
 
 			foreach ( $events as &$event ) {
@@ -431,7 +437,7 @@ class Ajax {
 		return $events;
 	}
 
-	private static function apply_intervals( $events ) {
+	private function apply_intervals( $events ) {
 		if ( $intervals = get_option( '_bpt_price_intervals' ) ) {
 			foreach ( $events as &$event ) {
 				foreach ( $event['dates'] as &$date ) {
@@ -449,7 +455,7 @@ class Ajax {
 		return $events;
 	}
 
-	private static function apply_include_fee( $events ) {
+	private function apply_include_fee( $events ) {
 
 		$all_include_fees = ( get_option( '_bpt_include_service_fee' ) === 'true' ? true : false );
 		$include_fee = get_option( '_bpt_price_include_fee' );
@@ -487,7 +493,7 @@ class Ajax {
 	 * @param  array $events An array of events with dates and prices.
 	 * @return array The modified event array.
 	 */
-	private static function include_service_fee( $events ) {
+	private function include_service_fee( $events ) {
 
 		if ( get_option( '_bpt_include_service_fee' ) === 'true' ) {
 			foreach ( $events as &$event ) {
@@ -512,7 +518,7 @@ class Ajax {
 	 * @param  mixed $events Either a json string or an array of events.
 	 * @return array		 The modified/filtered array.
 	 */
-	private static function filter_hidden_prices( $events ) {
+	private function filter_hidden_prices( $events ) {
 
 		if ( is_string( $events ) ) {
 			$events = json_decode( $events, true );

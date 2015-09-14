@@ -118,7 +118,6 @@
                 throw new Error('Saving... Failed!');
             })
             .done(function(data) {
-                console.log(data);
                 $('.bpt-setup-wizard-save').text('Saved');
 
                 setTimeout(function() {

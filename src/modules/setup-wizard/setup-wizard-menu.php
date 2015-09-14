@@ -15,7 +15,7 @@ $menu_slug = BPTPlugin::get_menu_slug();
 <?php settings_fields( $menu_slug ); ?>
 <div class="bpt-setup-wizard-wrapper wrap">
 <h1>
-	<img src="<?php echo esc_url( plugins_url( 'public/assets/img/bpt.png', self::$plugin_root ) ); ?>">
+	<img src="<?php echo esc_url( plugins_url( 'public/assets/img/bpt.png', $this->plugin_root() ) ); ?>">
 </h1>
 	<div class="bpt-setup-wizard bpt-intro">
 		<h1>Thanks for installing the Brown Paper Tickets Wordpress Plugin.</h1>
@@ -87,7 +87,7 @@ $menu_slug = BPTPlugin::get_menu_slug();
 		</p>
 
 		<div>
-			<button class="bpt-setup-wizard-test-account button-secondary">Test Account</button><img class="bpt-loading hidden" src="<?php echo esc_url( plugins_url( 'public/assets/img/loading.gif', self::$plugin_root ) ); ?>">
+			<button class="bpt-setup-wizard-test-account button-secondary">Test Account</button><img class="bpt-loading hidden" src="<?php echo esc_url( plugins_url( 'public/assets/img/loading.gif', $this->plugin_root() ) ); ?>">
 			<div id="bpt-setup-wizard-response"></div>
 		</div>
 	</div>

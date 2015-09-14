@@ -5,7 +5,7 @@
  *
  * Here lies the callbacks for the add_settings_fields() function.
  */
-namespace BrownPaperTickets\Modules\Account;
+namespace BrownPaperTickets\Modules\Dashboard;
 
 require_once( plugin_dir_path( __FILE__ ).'../../../src/brown-paper-tickets-plugin.php');
 

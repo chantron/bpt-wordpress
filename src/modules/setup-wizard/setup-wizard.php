@@ -5,16 +5,15 @@ require_once( plugin_dir_path( __FILE__ ).'../bpt-module-class.php' );
 
 class SetupWizard extends Module {
 
-	public static $module_name = '_setup_wizard';
-
+	public $module_name = '_setup_wizard';
 
 	public function load_menus() {
 		$page = add_submenu_page(
-			'options.php',  //or 'options.php'
+			null,  //or 'options.php'
 			'Brown Paper Tickets Setup Wizard',
 			'Setup Wizard',
 			'manage_options',
-			self::$menu_slug . '_setup_wizard',
+			$this->menu_slug . '_setup_wizard',
 			array( $this, 'render_menu' )
 		);
 
@@ -32,7 +31,7 @@ class SetupWizard extends Module {
 
 	public function load_admin_js($hook) {
 
-		if ( 'admin_page_brown_paper_tickets_settings_setup_wizard' !== $hook ) {
+		if ( $hook !== 'admin_page_brown_paper_tickets_settings_setup_wizard' ) {
 			return;
 		}
 
@@ -57,7 +56,7 @@ class SetupWizard extends Module {
 			'bpt_setup_wizard_js', 'bptSetupWizardAjax',
 			array(
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
-				'nonce' => wp_create_nonce( 'bpt-admin-nonce' ),
+				'nonce' => wp_create_nonce( 'bpt-account' ),
 			)
 		);
 	}

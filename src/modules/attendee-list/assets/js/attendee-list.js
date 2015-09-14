@@ -34,11 +34,13 @@
     }
 
     loadEvents = function() {
+        eventSelectView.set('loading', true);
         $.ajax(bptAttendeeList.ajaxurl, getEventsOptions)
         .done(function(data) {
             if (data.events.length) {
                 eventSelectView.set('events', data.events);
                 eventSelectView.set('selected', data.events[0]);
+                eventSelectView.set('loading', false);
                 eventSelectView.fire('select-event');
                 return;
             }
@@ -54,6 +56,7 @@
             return false;
         }
 
+        attendeeListView.set('loading', true);
         getAttendeesOptions.data.event = event.id;
 
         $.ajax(bptAttendeeList.ajaxurl, getAttendeesOptions)
@@ -61,6 +64,7 @@
 
         })
         .done(function(data) {
+            attendeeListView.set('loading', false);
             if (data.attendees.length) {
                 attendeeListView.set('attendees', data.attendees);
                 return;
@@ -78,7 +82,7 @@
         loadEvents();
     };
 
-    // Ractive.DEBUG = false;
+    Ractive.DEBUG = false;
 
     /**
      * The three Ractive views.

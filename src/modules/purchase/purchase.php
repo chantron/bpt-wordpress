@@ -14,7 +14,7 @@ use BrownPaperTickets\APIv2\CartInfo;
 class Purchase extends Module {
 
 	public function register_settings() {
-		register_setting( self::$menu_slug, self::$setting_prefix . 'purchase_settings' );
+		register_setting( $this->menu_slug, $this->setting_prefix . 'purchase_settings' );
 	}
 
 	public function register_sections() {
@@ -27,14 +27,14 @@ class Purchase extends Module {
 			$section_title,
 			$section_title,
 			array( $inputs, 'section' ),
-			self::$menu_slug . $section_suffix
+			$this->menu_slug . $section_suffix
 		);
 
 		add_settings_field(
-			self::$setting_prefix . 'enable_sales', // The ID of the input.
+			$this->setting_prefix . 'enable_sales', // The ID of the input.
 			'Enable Sales', // The title of the field.
 			array( $inputs, 'enable_sales' ), // Event HTML callback
-			self::$menu_slug . $section_suffix, // The settings page.
+			$this->menu_slug . $section_suffix, // The settings page.
 			$section_title // The section that the field will be rendered in.
 		);
 	}
@@ -63,7 +63,7 @@ class Purchase extends Module {
 					'templateUrl' => plugins_url( 'assets/templates/shopping-cart.html', __FILE__ ),
 					'requireAllInfo' => $require_all_info,
 				)
-			);	
+			);
 		}
 	}
 
@@ -86,7 +86,7 @@ class Purchase extends Module {
 	public function set_default_setting_values() {
 
 		$purchase_settings = get_option(
-			self::$setting_prefix . 'purchase_settings'
+			$this->setting_prefix . 'purchase_settings'
 		);
 
 		if ( ! $purchase_settings ) {
@@ -95,16 +95,16 @@ class Purchase extends Module {
 				'enable_sales' => false,
 			);
 
-			update_option( self::$menu_slug . self::$setting_prefix . 'purchase_settings', $settings );
+			update_option( $this->menu_slug . $this->setting_prefix . 'purchase_settings', $settings );
 		}
 	}
 
 	public function remove_setting_values() {
-		delete_option( self::$menu_slug . self::$setting_prefix . 'purchase_settings' );
+		delete_option( $this->menu_slug . $this->setting_prefix . 'purchase_settings' );
 	}
 
 	public function load_public_ajax_actions() {
-		
+
 		add_action( 'wp_ajax_nopriv_bpt_get_cart_contents', array( 'BrownPaperTickets\Modules\Purchase\Ajax', 'get_cart_contents' ) );
 
 		add_action( 'wp_ajax_nopriv_bpt_add_prices', array( 'BrownPaperTickets\Modules\Purchase\Ajax', 'add_prices' ) );

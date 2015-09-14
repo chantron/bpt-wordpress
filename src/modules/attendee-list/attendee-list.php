@@ -16,37 +16,45 @@ require_once( plugin_dir_path( __FILE__ ) . 'attendee-list-ajax.php' );
  */
 class AttendeeList extends \BrownPaperTickets\Modules\Module {
 
+
+	public function __construct() {
+		$this->module_name = '_attendee_list';
+
+		parent::__construct();
+	}
+
 	/**
 	 * Give the section a unique suffixe.
 	 * @var string
 	 */
-	static $page_suffix = '_attendee_list';
+	public $module_name = '_attendee_list';
 
 	/**
 	 * This module has just one section. Give it a name.
 	 * @var string
 	 */
-	static $section_title = 'Attendees';
+	public $section_title = 'Attendees';
 
 	/**
 	 * Register the sections.
 	 */
 	public function register_sections() {
+
 		add_settings_section(
-			self::$section_title,
-			self::$section_title,
+			$this->section_title,
+			$this->section_title,
 			array( 'BrownPaperTickets\Modules\AttendeeList\Menu', 'render' ),
-			self::$menu_slug . self::$page_suffix
+			$this->menu_slug . $this->module_name
 		);
 	}
 
 	public function load_menus() {
 		$page = add_submenu_page(
-			self::$menu_slug,  // Or 'options.php'.
+			$this->menu_slug,  // Or 'options.php'.
 			'Brown Paper Tickets Attendee List',
 			'Attendee List',
 			'manage_options',
-			self::$menu_slug . self::$page_suffix,
+			$this->menu_slug . $this->module_name,
 			array( $this, 'render_menu' )
 		);
 
@@ -61,13 +69,13 @@ class AttendeeList extends \BrownPaperTickets\Modules\Module {
 		// $screen->add_help_tab( array(
 		// 	'id' => 'bpt-apperance-event-list-help',
 		// 	'title' => 'Event List Selectors',
-		// 	'callback' => array( self::$inputs, 'event_list_help' ),
+		// 	'callback' => array( $this->inputs, 'event_list_help' ),
 		// ) );
 		//
 		// $screen->add_help_tab( array(
 		// 	'id' => 'bpt-apperance-calendar-help',
 		// 	'title' => 'Calendar Selectors',
-		// 	'callback' => array( self::$inputs, 'calendar_help' ),
+		// 	'callback' => array( $this->inputs, 'calendar_help' ),
 		// ) );
 	}
 
@@ -76,28 +84,34 @@ class AttendeeList extends \BrownPaperTickets\Modules\Module {
 	 * Add all the actions for the admin side.
 	 */
 	public function load_admin_ajax_actions() {
+		$ajax = new AttendeeList\Ajax();
+
 		add_action(
 			'wp_ajax_bpt_attendee_list_get_events',
-			array( 'BrownPaperTickets\Modules\AttendeeList\Ajax', 'get_events' )
+			array( $ajax, 'get_events' )
 		);
 
 		add_action(
 			'wp_ajax_bpt_attendee_list_get_attendees',
-			array( 'BrownPaperTickets\Modules\AttendeeList\Ajax', 'get_attendees' )
+			array( $ajax, 'get_attendees' )
 		);
 	}
 
-	public function load_admin_js($hook) {
+	public function load_admin_js( $hook ) {
 
-		if ( 'bpt-settings_page_brown_paper_tickets_settings_attendee_list' !== $hook ) {
+		// if ( 'bpt-settings_page_brown_paper_tickets_settings_attendee_list' !== $hook ) {
+		// 	return;
+		// }
+		//
+		if ( ! $this->is_current_menu( $hook ) ) {
 			return;
 		}
 
 		$localized_variables = array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'nonce' => wp_create_nonce( 'bpt-attendee-list-nonce' ),
-			'dateFormat' => get_option( self::$setting_prefix . 'date_format' ),
-			'timeFormat' => get_option( self::$setting_prefix . 'time_format' ),
+			'dateFormat' => get_option( $this->setting_prefix . 'date_format' ),
+			'timeFormat' => get_option( $this->setting_prefix . 'time_format' ),
 		);
 
 		wp_register_style(

@@ -57,7 +57,7 @@ class Shortcode {
 				$localized_variables['clientID'] = $event_list_attributes['client_id'];
 			}
 
-			wp_enqueue_style( 'bpt_event_list_css', plugins_url( '/assets/css/bpt-event-list-shortcode.css', __FILE__ ), array(), plugin::get_plugin_version() );
+			wp_enqueue_style( 'bpt_event_list_css', plugins_url( '/assets/css/bpt-event-list-shortcode.css', __FILE__ ), array(), \BrownPaperTickets\BPT_VERSION );
 
 			wp_register_script(
 				'event_feed_js_' . $post->ID,

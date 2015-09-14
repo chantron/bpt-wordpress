@@ -21,36 +21,36 @@ class Ajax {
 	 * The nonce title...
 	 * @var string
 	 */
-	private static $nonce_title = 'bpt-attendee-list-nonce';
+	private $nonce_title = 'bpt-attendee-list-nonce';
 
 	/**
 	 * Title for the attendee list event transient.
 	 * @var string
 	 */
-	private static $event_transient_title = '_bpt_attendee_list_events';
+	private $event_transient_title = '_bpt_attendee_list_events';
 
 	/**
 	 * The title will be combined with the event id when saving the transient.
 	 * @var string
 	 */
-	private static $attendees_transient_title = '_bpt_attendee_list_attendees';
+	private $attendees_transient_title = '_bpt_attendee_list_attendees';
 
 	/**
 	 * Get all the events, cache it and spit it out and die as JSON.
 	 */
-	public static function get_events() {
+	public function get_events() {
 		$api = new Api();
-		$events = get_transient( self::$event_transient_title );
+		$events = get_transient( $this->event_transient_title );
 		$success = false;
 		$get = filter_input_array( INPUT_GET, FILTER_SANITIZE_ENCODED );
 
-		Utilities::check_nonce( $get['nonce'], self::$nonce_title );
+		Utilities::check_nonce( $get['nonce'], $this->nonce_title );
 
 		if ( ! $events ) {
 			$events = $api->get_events();
 
 			set_transient(
-				self::$event_transient_title,
+				$this->event_transient_title,
 				$events,
 				Utilities::cache_time()
 			);
@@ -72,14 +72,14 @@ class Ajax {
 	 * Get a list of attendees for a given event and/or date, cache it and spit
 	 * out as JSON and die.
 	 */
-	public static function get_attendees() {
+	public function get_attendees() {
 		$api = new Api();
 		$get = filter_input_array( INPUT_GET, FILTER_SANITIZE_ENCODED );
 		$success = false;
 		$event = null;
 		$attendees = null;
 
-		Utilities::check_nonce( $get['nonce'], self::$nonce_title );
+		Utilities::check_nonce( $get['nonce'], $this->nonce_title );
 
 		if ( isset( $get['event'] ) ) {
 			$event = $get['event'];
@@ -87,14 +87,14 @@ class Ajax {
 
 		if ( $event ) {
 			$attendees = get_transient(
-				self::$attendees_transient_title . '_' . $event
+				$this->attendees_transient_title . '_' . $event
 			);
 
 			if ( ! $attendees ) {
 				$attendees = $api->get_attendees( $get['event'] );
 
 				set_transient(
-					self::$attendees_transient_title . '_' . $get['event'],
+					$this->attendees_transient_title . '_' . $get['event'],
 					$attendees,
 					Utilities::cache_time()
 				);

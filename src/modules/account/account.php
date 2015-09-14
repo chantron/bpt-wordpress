@@ -9,7 +9,13 @@ require_once( plugin_dir_path( __FILE__ ) . '/account-help.php' );
 
 class Account extends Module {
 
-	public static $module_name = '_api';
+	public $module_name;
+
+	public function __construct() {
+		$this->module_name = '_api';
+
+		parent::__construct();
+	}
 
 	public function load_admin_ajax_actions() {
 		add_action( 'wp_ajax_bpt_get_account', array( 'BrownPaperTickets\Modules\Account\Ajax', 'get_account' ) );
@@ -31,38 +37,38 @@ class Account extends Module {
 			$section_title,
 			null,
 			array( $inputs, 'section' ),
-			self::$menu_slug . self::$module_name
+			$this->menu_slug . $this->module_name
 		);
 
 		add_settings_field(
-			self::$setting_prefix . 'dev_id' . self::$module_name,
+			$this->setting_prefix . 'dev_id' . $this->module_name,
 			'Developer ID',
 			array( $inputs, 'developer_id' ),
-			self::$menu_slug . self::$module_name,
+			$this->menu_slug . $this->module_name,
 			$section_title
 		);
 
 		add_settings_field(
-			self::$setting_prefix . 'client_id' . self::$module_name,
+			$this->setting_prefix . 'client_id' . $this->module_name,
 			'Client ID',
 			array( $inputs, 'client_id' ),
-			self::$menu_slug . self::$module_name,
+			$this->menu_slug . $this->module_name,
 			$section_title
 		);
 	}
 
 	public function register_settings() {
-		register_setting( self::$menu_slug . self::$module_name, self::$setting_prefix . 'dev_id' );
-		register_setting( self::$menu_slug . self::$module_name, self::$setting_prefix . 'client_id' );
+		register_setting( $this->menu_slug . $this->module_name, $this->setting_prefix . 'dev_id' );
+		register_setting( $this->menu_slug . $this->module_name, $this->setting_prefix . 'client_id' );
 	}
 
 	public function load_menus() {
 		$page = add_submenu_page(
-			self::$menu_slug,  // Or 'options.php'.
+			$this->menu_slug,  // Or 'options.php'.
 			'Brown Paper Tickets Account',
 			'Account',
 			'manage_options',
-			self::$menu_slug . self::$module_name,
+			$this->menu_slug . $this->module_name,
 			array( $this, 'render_menu' )
 		);
 
@@ -95,11 +101,40 @@ class Account extends Module {
 		) );
 	}
 
-	public function load_admin_css($hook) {
-		if ( 'bpt-settings_page_brown_paper_tickets_settings' . self::$module_name !== $hook ) {
+	public function load_admin_css( $hook ) {
+
+		if ( ! $this->is_current_menu( $hook ) ) {
 			return;
 		}
 
 		wp_enqueue_style( 'bpt_admin_css' );
+	}
+
+	public function load_admin_js($hook) {
+
+		if (  ! $this->is_current_menu( $hook ) ) {
+			return;
+		}
+
+		$localized_variables = array(
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			'nonce' => wp_create_nonce( 'bpt-account' ),
+		);
+
+		wp_register_script(
+			'account_js',
+			plugins_url( '/assets/js/account.js', __FILE__ ),
+			array( 'ractive_js', 'jquery' ),
+			null,
+			true
+		);
+
+		wp_localize_script(
+			'account_js',
+			'bptAccount',
+			$localized_variables
+		);
+
+		wp_enqueue_script( 'account_js' );
 	}
 }

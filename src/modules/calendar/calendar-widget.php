@@ -10,7 +10,7 @@ class Widget extends \WP_Widget {
 
 	public function __construct( ) {
 
-		self::$plugin_version = plugin::get_plugin_version();
+		self::$plugin_version = \BrownPaperTickets\BPT_VERSION;
 
 		parent::__construct(
 			'_bpt_widget_calendar',

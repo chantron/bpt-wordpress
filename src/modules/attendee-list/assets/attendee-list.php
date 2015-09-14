@@ -1,5 +1,5 @@
-<div id="attendee-list" class="form-table wrap">
-	<img src="<?php echo esc_url( plugins_url( 'public/assets/img/bpt.png', self::$plugin_root ) )?>">
+<div id="attendee-list" class="form-table">
+	<img src="<?php echo esc_url( plugins_url( 'public/assets/img/bpt.png', $this->plugin_root() ) )?>">
 	<h1>Attendee Lists</h1>
 	<p>In order for this to work, the client ID you have set in the Account settings must in your authorized accounts.	</p>
 	<div id="event-select"></div>
@@ -20,12 +20,15 @@
 		<button id="refresh-events" class="button-secondary button-sm" on-click="refresh-events">Refresh Events</button>
 	{{/if}}
 
-	{{#unless events}}
-	<button class="button-primary" id="refresh-events">Load Events</button>
-	{{/unless}}
-
 	{{#if error}}
 		<p>{{error}}</p>
+	{{/if}}
+
+	{{#if loading}}
+	<div>
+		<img class="loading" src="<?php echo esc_url( plugins_url( 'public/assets/img/loading.gif', $this->plugin_root() ) )?>">
+		<p>Loading Events</p>
+	</div>
 	{{/if}}
 </script>
 
@@ -90,5 +93,20 @@
 	{{/attendees}}
 	<hr>
 {{/dates}}
+{{/if}}
+
+{{#unless loading}}
+	{{#unless dates}}
+		<h2>Attendees</h2>
+		<p>Select dates to view attendees.</p>
+	{{/unless}}
+{{/unless}}
+
+{{#if loading}}
+<h2>Attendees</h2>
+<div>
+	<img class="loading" src="<?php echo esc_url( plugins_url( 'public/assets/img/loading.gif', $this->plugin_root() ) )?>">
+	<p>Loading Attendees</p>
+</div>
 {{/if}}
 </script>

@@ -8,7 +8,7 @@ require_once( plugin_dir_path( __FILE__ ).'/cache-inputs.php' );
 
 class Cache extends Module {
 
-	public static $module_name = '_cache';
+	public $module_name = '_cache';
 
 	public function register_sections() {
 
@@ -18,13 +18,13 @@ class Cache extends Module {
 
 		// Register the cached_data array. This is to keep track of the data we have cached.
 
-		add_settings_section( $section_title, null, null, self::$menu_slug . self::$module_name );
+		add_settings_section( $section_title, null, null, $this->menu_slug . $this->module_name );
 
 		add_settings_field(
-			self::$setting_prefix . 'cache_time',
+			$this->setting_prefix . 'cache_time',
 			'Cache Settings',
 			array( $inputs, 'cache_time' ),
-			self::$menu_slug . self::$module_name,
+			$this->menu_slug . $this->module_name,
 			$section_title
 		);
 	}
@@ -34,10 +34,10 @@ class Cache extends Module {
 	}
 
 	public function register_settings() {
-		register_setting( self::$menu_slug . self::$module_name, self::$setting_prefix . 'cached_data' );
-		register_setting( self::$menu_slug . self::$module_name, self::$setting_prefix . 'show_wizard' );
-		register_setting( self::$menu_slug . self::$module_name, self::$setting_prefix . 'cache_time' );
-		register_setting( self::$menu_slug . self::$module_name, self::$setting_prefix . 'cache_unit' );
+		register_setting( $this->menu_slug . $this->module_name, $this->setting_prefix . 'cached_data' );
+		register_setting( $this->menu_slug . $this->module_name, $this->setting_prefix . 'show_wizard' );
+		register_setting( $this->menu_slug . $this->module_name, $this->setting_prefix . 'cache_time' );
+		register_setting( $this->menu_slug . $this->module_name, $this->setting_prefix . 'cache_unit' );
 	}
 
 	public function set_default_setting_values() {
@@ -47,11 +47,11 @@ class Cache extends Module {
 
 	public function load_menus() {
 		$page = add_submenu_page(
-			self::$menu_slug,  // Or 'options.php'.
+			$this->menu_slug,  // Or 'options.php'.
 			'Brown Paper Tickets Cache Settings',
 			'Cache',
 			'manage_options',
-			self::$menu_slug . self::$module_name,
+			$this->menu_slug . $this->module_name,
 			array( $this, 'render_menu' )
 		);
 

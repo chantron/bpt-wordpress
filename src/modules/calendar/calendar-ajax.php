@@ -17,7 +17,7 @@ class Ajax {
 	 * @param  boolean $prices    Get Prices? Default is false.
 	 * @return json               The JSON string of the event Data.
 	 */
-	public static function get_events() {
+	public function get_events() {
 		$get = filter_input_array( INPUT_GET, FILTER_SANITIZE_ENCODED );
 		$nonce           = $get['nonce'];
 		$widget_instance = $get['widgetID'];
