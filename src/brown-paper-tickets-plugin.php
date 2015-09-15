@@ -20,7 +20,6 @@ require_once( plugin_dir_path( __FILE__ ) . '../src/modules/event-list/event-lis
 require_once( plugin_dir_path( __FILE__ ) . '../src/modules/calendar/calendar.php' );
 require_once( plugin_dir_path( __FILE__ ) . '../src/modules/setup-wizard/setup-wizard.php' );
 require_once( plugin_dir_path( __FILE__ ) . '../src/modules/dashboard/dashboard.php' );
-
 require_once( plugin_dir_path( __FILE__ ) . '../src/modules/attendee-list/attendee-list.php' );
 
 use BrownPaperTickets\BPTSettingsFields;
@@ -99,7 +98,7 @@ class BPTPlugin {
 		return $this->modules;
 	}
 
-	public function activate() {
+	public static function activate() {
 		if ( ! current_user_can( 'activate_plugins' ) ) {
 			return;
 		}
@@ -117,7 +116,7 @@ class BPTPlugin {
 		}
 	}
 
-	public function deactivate() {
+	public static function deactivate() {
 		if ( ! current_user_can( 'activate_plugins' ) ) {
 			return;
 		}

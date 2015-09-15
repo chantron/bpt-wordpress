@@ -34,7 +34,7 @@ class BptWordpress {
 	public static function cache_enabled() {
 		$cache_time = get_option( '_bpt_cache_time' );
 
-		if ( $cache_time === 'false' ) {
+		if ( $cache_time === 'false' || $cache_time === false ) {
 			return false;
 		}
 

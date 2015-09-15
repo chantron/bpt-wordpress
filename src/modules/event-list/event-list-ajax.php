@@ -13,8 +13,12 @@ class Ajax {
 	/**
 	 * Get the Events
 	 */
-	public function get_events() {
-		$get = filter_input_array( INPUT_GET, FILTER_SANITIZE_ENCODED );
+	public function get_events( $get = null ) {
+
+		if ( ! $get ) {
+			$get = filter_input_array( INPUT_GET, FILTER_SANITIZE_ENCODED );
+		}
+
 		$nonce	 = $get['nonce'];
 		$post_id   = null;
 		$client_id = null;

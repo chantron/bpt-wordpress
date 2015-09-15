@@ -20,7 +20,6 @@ class Api extends \BrownPaperTickets\Modules\ModuleApi {
 
 		/**
 		 * Get Event List Setting Options
-		 *
 		 */
 		$show_dates           = get_option( '_bpt_show_dates' );
 		$show_prices          = get_option( '_bpt_show_prices' );

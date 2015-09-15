@@ -1,6 +1,7 @@
 <?php
 
 use BrownPaperTickets\Modules\EventList;
+use BrownPaperTickets\Modules\EventList\Ajax;
 
 class EventListTest extends WP_UnitTestCase {
 	protected $event_list;
@@ -13,7 +14,7 @@ class EventListTest extends WP_UnitTestCase {
 
 	public function test_module_name()
 	{
-		$this->assertEquals(EventList::$module_name, '_event');
+		$this->assertEquals($this->event_list->module_name, '_event');
 	}
 
 	public function test_load_shortcode()
@@ -113,7 +114,7 @@ class EventListTest extends WP_UnitTestCase {
 	public function test_load_admin_ajax_actions()
 	{
 		global $wp_filter;
-
+		$ajax = new EventList\Ajax();
 		$this->event_list->load_admin_ajax_actions();
 
 		$this->assertArrayHasKey('wp_ajax_bpt_set_price_max_quantity', $wp_filter);
@@ -123,35 +124,6 @@ class EventListTest extends WP_UnitTestCase {
 		$this->assertArrayHasKey('wp_ajax_bpt_set_price_intervals', $wp_filter);
 		$this->assertArrayHasKey('wp_ajax_bpt_set_price_include_fee', $wp_filter);
 
-		$this->assertArrayHasKey(
-			'BrownPaperTickets\Modules\EventList\Ajax::set_price_max_quantity',
-			$wp_filter['wp_ajax_bpt_set_price_max_quantity'][10]
-		);
-
-		$this->assertArrayHasKey(
-			'BrownPaperTickets\Modules\EventList\Ajax::hide_prices',
-			$wp_filter['wp_ajax_bpt_hide_prices'][10]
-		);
-
-		$this->assertArrayHasKey(
-			'BrownPaperTickets\Modules\EventList\Ajax::unhide_prices',
-			$wp_filter['wp_ajax_bpt_unhide_prices'][10]
-		);
-
-		$this->assertArrayHasKey(
-			'BrownPaperTickets\Modules\EventList\Ajax::get_events',
-			$wp_filter['wp_ajax_bpt_get_events'][10]
-		);
-
-		$this->assertArrayHasKey(
-			'BrownPaperTickets\Modules\EventList\Ajax::set_price_intervals',
-			$wp_filter['wp_ajax_bpt_set_price_intervals'][10]
-		);
-
-		$this->assertArrayHasKey(
-			'BrownPaperTickets\Modules\EventList\Ajax::set_price_include_fee',
-			$wp_filter['wp_ajax_bpt_set_price_include_fee'][10]
-		);
 	}
 
 	public function test_load_public_ajax_actions()
@@ -160,14 +132,5 @@ class EventListTest extends WP_UnitTestCase {
 
 		$this->event_list->load_public_ajax_actions();
 		$this->assertArrayHasKey( 'wp_ajax_nopriv_bpt_get_events', $wp_filter );
-		$this->assertArrayHasKey(
-			'BrownPaperTickets\Modules\EventList\Ajax::get_events',
-			$wp_filter['wp_ajax_nopriv_bpt_get_events'][10]
-		);
-	}
-
-	public function test_load_menus()
-	{
-
 	}
 }

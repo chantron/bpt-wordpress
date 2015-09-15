@@ -36,7 +36,7 @@ class PluginTest extends WP_UnitTestCase {
 
 	function test_get_modules() {
 		$modules = BPTPlugin::get_modules();
-		$this->assertCount(10, $modules);
+		$this->assertCount(9, $modules);
 		$this->assertArrayHasKey('dashboard', $modules);
 		$this->assertArrayHasKey('account', $modules);
 		$this->assertArrayHasKey('appearance', $modules);
@@ -45,7 +45,6 @@ class PluginTest extends WP_UnitTestCase {
 		$this->assertArrayHasKey('event_list', $modules);
 		$this->assertArrayHasKey('purchase', $modules);
 		$this->assertArrayHasKey('attendee_list', $modules);
-		$this->assertArrayHasKey('help', $modules);
 		$this->assertArrayHasKey('setup_wizard', $modules);
 
 		$this->assertInstanceOf('BrownPaperTickets\Modules\Dashboard', $modules['dashboard']);
@@ -56,7 +55,6 @@ class PluginTest extends WP_UnitTestCase {
 		$this->assertInstanceOf('BrownPaperTickets\Modules\EventList', $modules['event_list']);
 		$this->assertInstanceOf('BrownPaperTickets\Modules\Purchase', $modules['purchase']);
 		$this->assertInstanceOf('BrownPaperTickets\Modules\AttendeeList', $modules['attendee_list']);
-		$this->assertInstanceOf('BrownPaperTickets\Modules\Help', $modules['help']);
 		$this->assertInstanceOf('BrownPaperTickets\Modules\SetupWizard', $modules['setup_wizard']);
 	}
 }
