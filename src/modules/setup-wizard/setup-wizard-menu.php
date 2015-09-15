@@ -7,7 +7,7 @@ use BrownPaperTickets\Modules\General\Inputs as GeneralInputs;
 
 use BrownPaperTickets\BPTPlugin;
 
-$menu_slug = BPTPlugin::get_menu_slug();
+$menu_slug = $this->menu_slug;
 
 ?>
 

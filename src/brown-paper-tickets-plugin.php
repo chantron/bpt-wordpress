@@ -110,7 +110,7 @@ class BPTPlugin {
 		if ( ! get_option( '_bpt_dev_id' ) && ! get_option( '_bpt_client_id' ) ) {
 			update_option( '_bpt_show_wizard', 'true' );
 
-			foreach ($this->modules as $module) {
+			foreach (self::get_instance()->get_modules() as $module) {
 				$module->activate();
 			}
 		}
