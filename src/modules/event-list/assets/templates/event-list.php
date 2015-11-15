@@ -75,7 +75,7 @@ if ( isset( $css ) ) {
 
 {{ #error }}
 	<div intro="slide" class="bpt-event bpt-default-theme">
-	<h2>Sorry, an error has occured while loading events.</h2>
+	<h2>Sorry, an error has occurred while loading events.</h2>
 	<p>{{ bptError }}</p>
 	</div>
 {{ /error }}

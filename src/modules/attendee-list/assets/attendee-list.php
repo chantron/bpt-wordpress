@@ -69,7 +69,7 @@
 		<div class="attendee-row-{{i2 % 2 === 1 ? 'odd' : 'even'}}">
 				<h4>{{firstName}} {{lastName}}</h4>
 				<table>
-					<thead>
+					<!-- <thead>
 
 							<th>Admission Level</th>
 							<th>Ticket Number</th>
@@ -77,7 +77,7 @@
 							<th>Row</th>
 							<th>Seat</th>
 
-					</thead>
+					</thead> -->
 					<tbody>
 						<tr>
 							<td>{{priceName(priceID)}}</td>
