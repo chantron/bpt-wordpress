@@ -17,7 +17,7 @@ use BrownPaperTickets\BPTPlugin;
 			<p class="about-description">Please be aware that this plugin is a beta release. You may encounter errors and bugs.</p>
 			<div class="welcome-panel-column-container">
 				<div class="welcome-panel-column">
-					<h4>Account Issues</h4>
+					<h3>Account Issues</h3>
 					<p>
 						If you are having issues with your Client or Developer ID, please email <a href="mailto:support@brownpapertickets.com?subject=WordPress Plugin Client ID">support@brownpapertickets.com</a>.
 					</p>
@@ -32,7 +32,7 @@ use BrownPaperTickets\BPTPlugin;
 					</p>
 				</div>
 				<div class="welcome-panel-column">
-					<h4>Bug Reports and Feature Requests</h4>
+					<h3>Bug Reports and Feature Requests</h3>
 					<p>
 						<strong>Bug reports</strong> should be reported on the GitHub issue tracker page. This allows us to keep development of the plugin and issue reporting tightly synced.
 					</p>
@@ -66,10 +66,10 @@ use BrownPaperTickets\BPTPlugin;
 
 <script type="text/ractive" id="bpt-welcome-panel-template">
 	{{ #account }}
-	<h3>Hi, {{ firstName }}</h3><h4>Thanks for using Brown Paper Tickets.</h4>
+	<h2>Hi, {{ firstName }}</h2><h3>Thanks for using Brown Paper Tickets.</h3>
 	{{ /account}}
 	{{ ^account }}
-	<h3>Thanks for using Brown Paper Tickets.</h3>
+	<h2>Thanks for using Brown Paper Tickets.</h2>
 	{{ /account }}
 	<div class="bpt-status-box">
 
