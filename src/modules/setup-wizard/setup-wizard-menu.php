@@ -12,7 +12,7 @@ $menu_slug = $this->menu_slug;
 ?>
 
 <form id="bpt-setup-wizard-form" method="post" action="options.php">
-<?php settings_fields( $menu_slug ); ?>
+<?php settings_fields( $menu_slug . '_api' ); ?>
 <div class="bpt-setup-wizard-wrapper wrap">
 <h1>
 	<img src="<?php echo esc_url( plugins_url( 'public/assets/img/bpt.png', $this->plugin_root() ) ); ?>">
@@ -28,7 +28,7 @@ $menu_slug = $this->menu_slug;
 	<div class="bpt-setup-wizard bpt-step-1">
 		<h1>Account Setup</h1>
 		<h3>
-			First, you'll need you'll Brown Paper Tickets Developer ID.
+			First, you'll need your Brown Paper Tickets Developer ID.
 		</h3>
 		<?php AccountInputs::developer_id(); ?>
 		<p>
@@ -94,25 +94,13 @@ $menu_slug = $this->menu_slug;
 	<div class="bpt-setup-wizard bpt-step-4">
 		<h1>Setup is complete.</h1>
 
-		<h2>However, you'll want to take a look at some of these other settings.</h2>
-		<h3>You can always edit these options later by going to the "BPT Settings" section at the bottom left of the Wordpress Admin screen.</h3>
-		<hr />
-		<div class="bpt-setup-wizard-advanced-settings">
-		<?php do_settings_sections( $menu_slug . '_event' ); ?>
-		<?php do_settings_sections( $menu_slug . '_general' ); ?>
-		<?php do_settings_sections( $menu_slug . '_calendar' ); ?>
-		<?php do_settings_sections( $menu_slug . '_password_prices' ); ?>
+		<h2>However, you'll want to take a look at some of the other settings and options available under <a href="<?php menu_page_url( $menu_slug ); ?>">BPT Settings</a>. You can find it at the bottom of the admin screen.</h2>
 			<div class="bpt-setup-wizard-bpt-setup-wizard-button-container">
 				<button class="bpt-setup-wizard-prev-step button-secondary button-large">&laquo; Previous</button>
 				<button class="button-primary button-large bpt-setup-wizard-save">Save</button>
 			</div>
 		</div>
 	</div>
-	<div class="bpt-setup-wizard-debug">
-
-
-	</div>
-
 </div>
 </form>
 
