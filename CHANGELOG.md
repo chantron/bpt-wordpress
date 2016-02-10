@@ -1,5 +1,12 @@
 # Changelog
 
+### v0.7.1
+
+#### Bug Fixes
+* Fixed issue where upcoming events in the Calendar widget were not being ordered properly.
+* Fixed various typos.
+* Fixed issue where the setup wizard was not saving the account/client ID properly.
+
 ### v0.7.0
 
 #### New Features

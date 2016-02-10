@@ -3,16 +3,16 @@ Contributors: Chandler Blum
 Donate Link: N/A
 Tags: bpt, brown paper tickets
 Requires at least: 3.6
-Tested up to: 4.3.0
-Stable tag: 0.7.0
+Tested up to: 4.4.2
+Stable tag: 0.7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-The Brown Paper Tickets Plugin is a simple way to display your Brown Paper Tickets events in a Wordpress post/page.
+The Brown Paper Tickets Plugin is a simple way to display your Brown Paper Tickets events in a WordPress post/page.
 
 == Description ==
 
-The Brown Paper Tickets plugin is a simple way to display events in a Wordpress post/page. You can display a single event, a list of all events or all of your events in a calendar.
+The Brown Paper Tickets plugin is a simple way to display events in a WordPress post/page. You can display a single event, a list of all events or all of your events in a calendar.
 
 The Brown Paper Tickets plugin is Free Software, released under the [GNU GPL v2 or later](http://www.gnu.org/licenses/gpl-2.0.txt). Certain libraries used by the plugin (see About section) are licensed under the MIT License.
 
@@ -28,7 +28,7 @@ It's source code can be found on [Github](https://github.com/BrownPaperTickets/b
 
 To install the plugin, download the zip, extract it and upload the extracted folder to your plugins directory on your webserver.
 
-From there, activate the plugin as normal. The plugin should take you through a setup wizard. If for some reason it doesn't, on the bottom of your Wordpress Admin menu you should see a "BPT Settings" link.
+From there, activate the plugin as normal. The plugin should take you through a setup wizard. If for some reason it doesn't, on the bottom of your WordPress Admin menu you should see a "BPT Settings" link.
 
 To obtain your developer ID, you must first have developer tools added to your Brown Paper Tickets account. First log into BPT, then go to [Account Functions](https://www.brownpapertickets.com/user/functions.html). Click Developer Tools and then add. You'll see a new link in the BPT navigation titled "Developer". Click that and you'll see your developer ID listed at the top.
 
@@ -46,7 +46,7 @@ or page that you want the listing to appear.
 = Single Event Listing =
 Use the ```[list_events event_id="XXXXXX"]``` shortcode to display a single event (XXXXXX is the event ID).
 
-**The default shipping options set by the plugin are Will-Call and Print at Home. If your events are using something different, go to the "BPT Settings" page in the Wordpress Admin to set them.**
+**The default shipping options set by the plugin are Will-Call and Print at Home. If your events are using something different, go to the "BPT Settings" page in the WordPress Admin to set them.**
 
 = Calendar Format =
 
@@ -93,7 +93,7 @@ To add your account:
 
 = My password protected prices are being displayed by the plugin, how do I prevent that? =
 
-When you're logged into Wordpress as an Administrator, go to the post/page where the event list is being displayed. You should see a green "HIDE PRICE" link under the prices. Clicking that will hide the price from any visitor to the site who is not logged in as an admin.
+When you're logged into WordPress as an Administrator, go to the post/page where the event list is being displayed. You should see a green "HIDE PRICE" link under the prices. Clicking that will hide the price from any visitor to the site who is not logged in as an admin.
 
 = How can I customize the look and feel of the event list or the calendar? =
 
@@ -104,6 +104,34 @@ Go to BPT Settings and click on the appearance tab. You can add custom CSS there
 No upgrade notes.
 
 == Changelog ==
+= v0.7.1 =
+
+**Bug Fixes**
+
+* Fixed issue where upcoming events in the Calendar widget were not being ordered properly.
+* Fixed various typos.
+* Fixed issue where the setup wizard was not saving the account/client ID properly.
+
+**v0.7.0**
+
+**New Features**
+
+* Added attendee lists
+
+**Improvments**
+
+* Admin UI refactoring. The BPT Settings sections have been split up into
+individual pages and kept as native WordPress as possible. This should hopefully
+improve use on mobile and in general.
+
+**Bug Fixes**
+
+* Fixed issue where plugin would redirect super admin to plugin settings page upon network activation.
+
+**Other**
+
+* Updated Ractive to v0.7.3
+* Swapped icon of the BPT Settings menu.
 
 = v0.6.3 =
 
