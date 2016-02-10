@@ -41,6 +41,24 @@
                 },
                 unescapeHTML: function unescapeHTML(html) {
                     return _.unescape(html);
+                },
+                sortEvents: function(events) {
+                    events = events.slice();
+
+                    events = events.sort(function(a, b) {
+
+                        if (a.date > b.date) {
+                            return 1;
+                        }
+
+                        if (a.date < b.date) {
+                            return -1;
+                        }
+
+                        return 0;
+                    });
+
+                    return events;
                 }
             }
         });

@@ -213,7 +213,7 @@ class Widget extends \WP_Widget {
 					<h1 intro="slide" outro="fade">Upcoming Events</h1>
 				{{ /showUpcoming}}
 
-				{{ #currentEvents }}
+				{{ #sortEvents(currentEvents) }}
 				<div class="bpt-calendar-widget-event-view-event" intro="slide" outro="fade">
 					<h2>{{{ unescapeHTML(title) }}}</h2>
 					<div class="bpt-calendar-widget-event-view-location">
