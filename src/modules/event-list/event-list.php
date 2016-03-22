@@ -56,6 +56,11 @@ class EventList extends \BrownPaperTickets\Modules\Module {
 			$this->setting_prefix . 'sort_events'
 		);
 
+		register_setting(
+			$this->menu_slug . $this->module_name,
+			$this->setting_prefix . 'credit_cards_displayed'
+		);
+
 		// Date Settings
 		register_setting(
 			$this->menu_slug . $this->module_name,
@@ -212,6 +217,13 @@ class EventList extends \BrownPaperTickets\Modules\Module {
 			$this->menu_slug . $this->module_name, $this->event_section_title
 		);
 
+		add_settings_field(
+			$this->setting_prefix . 'credit_cards_displayed',
+			'Display Credit Card Icons',
+			array( $input, 'credit_cards_displayed' ),
+			$this->menu_slug . $this->module_name, $this->event_section_title
+		);
+
 		// Date Fields
 
 		add_settings_field(
@@ -312,13 +324,13 @@ class EventList extends \BrownPaperTickets\Modules\Module {
 			array( $input, 'hidden_prices' ),
 			$this->menu_slug . $this->module_name, $this->hidden_prices_section_title
 		);
-
 	}
 
 	public function set_default_setting_values() {
 
 		update_option( $this->setting_prefix . 'show_full_description', 'false' );
 		update_option( $this->setting_prefix . 'show_location_after_description', 'false' );
+		update_option( $this->setting_prefix . 'credit_cards_displayed', array( 'visa', 'mc', 'discover', 'amex' ) );
 
 		// Date Settings.
 		update_option( $this->setting_prefix . 'show_dates', 'true' );

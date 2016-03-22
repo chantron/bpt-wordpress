@@ -14,6 +14,7 @@ $date_format = esc_html( get_option( '_bpt_date_format' ) );
 $time_format = esc_html( get_option( '_bpt_time_format' ) );
 $show_end_time = get_option( '_bpt_show_end_time' );
 $event_list_style = get_option( '_bpt_event_list_style' );
+$credit_cards = get_option( '_bpt_credit_cards_displayed' );
 
 if ( $date_format === 'custom' ) {
 	$date_format = esc_html( get_option( '_bpt_custom_date_format' ) );
@@ -265,10 +266,9 @@ if ( isset( $css ) ) {
 					<div class="bpt-add-to-cart">
 						<button class="bpt-submit" type="submit">Add to Cart</button>
 						<span class="bpt-cc-logos">
-							<img src="<?php echo esc_url( plugins_url( 'img/visa_icon.png', __DIR__ ) ); ?>" />
-							<img src="<?php echo esc_url( plugins_url( 'img/mc_icon.png', __DIR__ ) ); ?>" />
-							<img src="<?php echo esc_url( plugins_url( 'img/discover_icon.png', __DIR__ ) ); ?>" />
-							<img src="<?php echo esc_url( plugins_url( 'img/amex_icon.png', __DIR__ ) ); ?>" />
+						<?php foreach ($credit_cards as $card) { ?>
+							<img src="<?php echo esc_url( plugins_url( 'img/' . $card . '_icon.png', __DIR__ ) ); ?>" />
+						<?php } ?>
 						</span>
 					</div>
 				</div>

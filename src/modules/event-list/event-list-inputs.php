@@ -147,17 +147,17 @@ class Inputs {
 	public function shipping_methods() {
 		?>
 		<div class="shipping-methods-wrapper">
-			<label for="print-at-home">Print at Home</label>
 			<input id="print-at-home" value="print_at_home" name="_bpt_shipping_methods[]"  type="checkbox" <?php esc_attr_e( Utils::is_selected( 'print_at_home', '_bpt_shipping_methods', 'checked' ) );?>/>
+			<label for="print-at-home">Print at Home</label>
 
-			<label for="will-call">Will-Call</label>
 			<input id="will-call" value="will_call" name="_bpt_shipping_methods[]"  type="checkbox" <?php esc_attr_e( Utils::is_selected( 'will_call', '_bpt_shipping_methods', 'checked' ) );?>/>
+			<label for="will-call">Will-Call</label>
 
-			<label for="physical">Physical</label>
 			<input id="physical" value="physical" name="_bpt_shipping_methods[]"  type="checkbox" <?php esc_attr_e( Utils::is_selected( 'physical', '_bpt_shipping_methods', 'checked' ) );?>/>
+			<label for="physical">Physical</label>
 
-			<label for="mobile">Mobile</label>
 			<input id="mobile" value="mobile" name="_bpt_shipping_methods[]"  type="checkbox" <?php esc_attr_e( Utils::is_selected( 'mobile', '_bpt_shipping_methods', 'checked' ) );?>/>
+			<label for="mobile">Mobile</label>
 
 			<p class="description">
 				See the "Shipping Methods" section in the help menu (top right) for full information.
@@ -357,4 +357,21 @@ class Inputs {
 		</div>
 		<?php
 	}
+
+	public function credit_cards_displayed() { ?>
+		<div class="bpt-credit-cards-displayed-wrapper">
+
+			<input id="bpt-credit-cards-displayed-visa" name="_bpt_credit_cards_displayed[]" <?php esc_attr_e( Utils::is_selected( 'visa', '_bpt_credit_cards_displayed', 'checked' ) ); ?> value="visa" type="checkbox" />
+			<label for="bpt-credit-cards-displayed-visa">Visa</label>
+
+			<input id="bpt-credit-cards-displayed-mc" name="_bpt_credit_cards_displayed[]" <?php esc_attr_e( Utils::is_selected( 'mc', '_bpt_credit_cards_displayed', 'checked' ) ); ?> value="mc" type="checkbox" />
+			<label for="bpt-credit-cards-displayed-mc">Master Card</label>
+
+			<input id="bpt-credit-cards-displayed-discover" name="_bpt_credit_cards_displayed[]" <?php esc_attr_e( Utils::is_selected( 'discover', '_bpt_credit_cards_displayed', 'checked' ) ); ?> value="discover" type="checkbox" />
+			<label for="bpt-credit-cards-displayed-discover">Discover</label>
+
+			<input id="bpt-credit-cards-displayed-amex" name="_bpt_credit_cards_displayed[]" <?php esc_attr_e( Utils::is_selected( 'amex', '_bpt_credit_cards_displayed', 'checked' ) ); ?> value="amex" type="checkbox" />
+			<label for="bpt-credit-cards-displayed-amex">American Express</label>
+		</div>
+	<?php }
 }
