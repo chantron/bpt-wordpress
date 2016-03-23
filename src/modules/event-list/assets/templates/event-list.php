@@ -232,6 +232,10 @@ if ( isset( $css ) ) {
 					echo '<option value="4">Will-Call (No additional fee!)</option>';
 					break;
 
+				case 'mobile':
+					echo '<option value="7">Mobile Delivery (No additional fee!)</option>';
+					break;
+
 				case 'physical':
 					echo '<option value="1">Physical Tickets - USPS 1st Class (No additional fee!)</option>';
 					echo '<option value="2">Physical Tickets - USPS Priority Mail ($5.05)</option>';
