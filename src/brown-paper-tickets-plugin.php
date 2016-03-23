@@ -27,7 +27,7 @@ use BrownPaperTickets\BPTAjaxActions;
 use BrownPaperTickets\BPTWidgets;
 use BrownPaperTickets\BptWordpress as Utilities;
 
-const BPT_VERSION = '0.7.1';
+const BPT_VERSION = '0.7.2';
 const PLUGIN_SLUG = 'brown_paper_tickets';
 
 class BPTPlugin {

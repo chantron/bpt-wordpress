@@ -103,6 +103,14 @@ No upgrade notes.
 
 ## Changelog
 
+### v0.7.2
+
+#### Improvements
+* Added ability to choose which credit card icons to display on the event list.
+
+#### Bug Fixes
+* Fixed issue with displaying mobile ticket option in event list.
+
 ### v0.7.1
 
 #### Bug Fixes
