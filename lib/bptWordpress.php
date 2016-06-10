@@ -16,7 +16,8 @@ class BptWordpress {
 	public static function check_nonce( $nonce, $nonce_title ) {
 
 		if ( ! wp_verify_nonce( htmlentities( $nonce ), $nonce_title ) ) {
-			wp_send_json_error( 'Invalid nonce.' );
+			http_response_code(403);
+			wp_send_json_error( array( 'message' => 'Invalid nonce.' ) );
 		}
 
 		return true;
@@ -97,7 +98,7 @@ class BptWordpress {
 	/**
 	 * Determiner whether or not the user is an administrator.
 	 * @param  integer  $user_id The Id of the user.
-	 * @return boolean           Returns true if user is an admin.
+	 * @return boolean		   Returns true if user is an admin.
 	 */
 	static function is_user_an_admin( $user_id = null ) {
 
@@ -375,7 +376,7 @@ class BptWordpress {
 	 * @param  [type]  $value  [description]
 	 * @param  [type]  $option [description]
 	 * @param  [type]  $type   [description]
-	 * @return boolean         [description]
+	 * @return boolean		 [description]
 	 */
 	static function is_selected( $value, $option = null, $type = null ) {
 
@@ -514,7 +515,7 @@ class BptWordpress {
 	 * Convert Date. Converst the Date to a human readable date.
 	 *
 	 * @param  string $date The String that needs to be formatted.
-	 * @return string       The formatted date string.
+	 * @return string	   The formatted date string.
 	 */
 	public static function convert_date( $date ) {
 		return strftime( '%B %e, %Y', strtotime( $date ) );
@@ -523,7 +524,7 @@ class BptWordpress {
 	/**
 	 * Convert Time. Converst the Time to a human readable date.
 	 * @param  string $time The string to be formated.
-	 * @return string       The formatted string.
+	 * @return string	   The formatted string.
 	 */
 	public static function convert_time( $date ) {
 		return strftime( '%l:%M%p', strtotime( $date ) );
@@ -545,10 +546,10 @@ class BptWordpress {
 
 	/**
 	 * Removes past dates and deactivated from an array of events.
-	 * @param  array   $event_list     	   An array of events with dates.
+	 * @param  array   $event_list	 	   An array of events with dates.
 	 * @param  boolean $remove_deactivated Pass false if you want to remove deactivated dates.
-	 * @param  boolean $remove_past        Pass false if you want to remove past dates.
-	 * @return array                       The modified event array with bad dates removed.
+	 * @param  boolean $remove_past		Pass false if you want to remove past dates.
+	 * @return array					   The modified event array with bad dates removed.
 	 */
 	public static function remove_bad_dates( $event_list, $remove_deactivated = true, $remove_past = true ) {
 
@@ -661,5 +662,23 @@ class BptWordpress {
 		}
 
 		return $c;
+	}
+
+	public static function xml_2_array( $xml ) {
+		$converted = array();
+		$properties = get_object_vars( $xml );
+
+		foreach ( $properties as $key => &$value ) {
+			if ( is_object( $value ) ) {
+				$value = self::xml_2_array( $value );
+				$converted[ (string) $key ] = $value;
+			} elseif ( is_array( $value ) ) {
+				$converted[ (string) $key ] = $value;
+			} else {
+				$converted[ (string) $key ] = (string) $value;
+			}
+		}
+
+		return $converted;
 	}
 }

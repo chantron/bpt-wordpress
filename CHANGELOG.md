@@ -1,5 +1,10 @@
 # Changelog
 
+### v0.8.0
+
+#### New Feature
+* Added Custom Event Feed
+
 ### v0.7.1
 
 #### Bug Fixes

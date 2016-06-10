@@ -21,14 +21,16 @@ require_once( plugin_dir_path( __FILE__ ) . '../src/modules/calendar/calendar.ph
 require_once( plugin_dir_path( __FILE__ ) . '../src/modules/setup-wizard/setup-wizard.php' );
 require_once( plugin_dir_path( __FILE__ ) . '../src/modules/dashboard/dashboard.php' );
 require_once( plugin_dir_path( __FILE__ ) . '../src/modules/attendee-list/attendee-list.php' );
+require_once( plugin_dir_path( __FILE__ ) . '../src/modules/event-feed/event-feed.php' );
 
 use BrownPaperTickets\BPTSettingsFields;
 use BrownPaperTickets\BPTAjaxActions;
 use BrownPaperTickets\BPTWidgets;
 use BrownPaperTickets\BptWordpress as Utilities;
 
-const BPT_VERSION = '0.7.2';
+const BPT_VERSION = '0.8.0';
 const PLUGIN_SLUG = 'brown_paper_tickets';
+const TEXT_DOMAIN = 'brown-paper-tickets-plugin';
 
 class BPTPlugin {
 	protected static $instance = null;
@@ -68,6 +70,7 @@ class BPTPlugin {
 		$this->modules['purchase'] = new Modules\Purchase();
 		$this->modules['attendee_list'] = new Modules\AttendeeList();
 		$this->modules['setup_wizard'] = new Modules\SetupWizard();
+		$this->modules['event_feed'] = new Modules\EventFeed();
 	}
 
 	/**
@@ -164,9 +167,10 @@ class BPTPlugin {
 	{
 		wp_register_script( 'ractive_js', plugins_url( '/public/assets/js/lib/ractive.min.js', dirname( __FILE__ ) ), array(), false, true );
 		wp_register_script( 'ractive_transitions_slide_js', plugins_url( '/public/assets/js/lib/ractive-transitions-slide.js', dirname( __FILE__ ) ), array( 'ractive_js' ), false, true );
-		wp_register_script( 'ractive_transitions_fade_js', plugins_url( '/public/assets/js/lib/ractive-transitions-fade.js', dirname( __FILE__ ) ), array( 'ractive_js' ), false, true );
+		wp_register_script( 'ractive_transitions_fade_js', plugins_url( '/public/ass2ets/js/lib/ractive-transitions-fade.js', dirname( __FILE__ ) ), array( 'ractive_js' ), false, true );
 		wp_register_script( 'moment_with_langs_min', plugins_url( '/public/assets/js/lib/moment-with-langs.min.js', dirname( __FILE__ ) ), array(), false, true );
 		wp_register_script( 'clndr_min_js', plugins_url( 'public/assets/js/lib/clndr.min.js', dirname( __FILE__ ) ), array( 'underscore', 'jquery' ), false, true );
+		wp_register_script( 'bpt', plugins_url( 'public/assets/js/lib/bpt.min.js', dirname( __FILE__ ) ), array(), false, true );
 	}
 
 	public function register_css_libs()

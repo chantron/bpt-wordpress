@@ -3,8 +3,8 @@ Contributors: Chandler Blum
 Donate Link: N/A
 Tags: bpt, brown paper tickets
 Requires at least: 3.6
-Tested up to: 4.4.2
-Stable tag: 0.7.1
+Tested up to: 4.5.2
+Stable tag: 0.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -104,6 +104,12 @@ Go to BPT Settings and click on the appearance tab. You can add custom CSS there
 No upgrade notes.
 
 == Changelog ==
+
+== v0.8.0 ==
+
+**New Feature**
+
+* Added Custom Event Feed
 
 == v0.7.2 ==
 
