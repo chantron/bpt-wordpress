@@ -125,24 +125,84 @@ class EventFeedManager {
 	 * or false if the results from the feed could not be parsed.
 	 */
 	public function pull() {
-		$raw_events = $this->api->get_events( $this->id );
-		$events = array();
-		if ( $raw_events->event && count( $raw_events->event ) )  {
-			// Having issues working with the SimpleXMLElement's so run it
-			// it through json.
-			$events = json_encode( $raw_events );
-			$events = json_decode( $events );
+		$events = $this->api->get_events( $this->id );
+		return $this->parse_events( $events );
+	}
 
-			foreach ( $events->event as &$event ) {
-				$event->title = str_replace( '{e_name}amp;', '&', $event->title );
-				$event->description = str_replace( '{e_short_description}amp;', '&', $event->description );
-                $event->description = wp_kses_post( html_entity_decode( $event->description ) );
-                if ( $event->event_id) {
-					$event->images = $this->api->get_images( $event->event_id );
-				}
-			}
+	public function parse_events( $events ) {
+        $events = $this->prune_events( $events );
+        $events = $this->prune_dates( $events );
+        $events = $this->sort_events( $events );
+
+		foreach ( $events as &$event ) {
+			$event['images'] = $this->api->get_images( $event['id'] );
 		}
 
-		return $events;
+        return $events;
 	}
+
+    public function prune_events( $events ) {
+        foreach ($events as $key => &$event ) {
+            if ( ! $event['live'] ) {
+                unset($events[$key]);
+            }
+        }
+
+        return $events;
+    }
+
+    public function prune_dates( $events ) {
+        foreach ( $events as &$event ) {
+            if ( ! $event['dates'] ) {
+                unset($event);
+                continue;
+            }
+
+            foreach ($event['dates'] as $key => &$date) {
+                if ( ! $date['live'] ) {
+                    unset( $event['dates'][$key] );
+                }
+            }
+
+            $event['dates']  = array_values( $event['dates'] );
+        }
+
+        return $events;
+    }
+
+    public function sort_events( $events ) {
+        // foreach ($events as &$event) {
+        //     usort( $event['dates'], [$this, 'sort_dates'] );
+        // }
+
+        usort( $events, function( $a, $b ) {
+            if ($a['dates'][0]['dateStart'] < $b['dates'][0]['dateStart']) {
+                return -1;
+            }
+
+            if ($a['dates'][0]['dateStart'] > $b['dates'][0]['dateStart']) {
+                return 1;
+            }
+
+            return 0;
+        });
+
+        return $events;
+    }
+    //
+    // public function sort_dates( $a, $b ) {
+    //     if ( ! isset($a['start_date']) ||  ! isset( $b['start_date'] ) ) {
+    //         return 0;
+    //     }
+    //
+    //     if ( $a['start_date'] < $b['start_date'] ) {
+    //         return -1;
+    //     }
+    //
+    //     if ( $a['start_date'] > $b['start_date'] ) {
+    //         return 1;
+    //     }
+    //
+    //     return 0;
+    // }
 }

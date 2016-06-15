@@ -23,12 +23,22 @@ class Api extends \BrownPaperTickets\Modules\ModuleApi {
 		}
 
 		try {
+            $events = array();
 			$xml = new \SimpleXMLElement( $response['body'] );
+            $api = new EventInfo( $this->dev_id );
+
+            foreach( $xml->event as $event ) {
+                $response = $api->getEvents( null, $event->event_id, true );
+                if ( $response ) {
+                    $events[] = $response[0];
+                }
+            }
+
 		} catch (\Exception $e) {
 			return false;
 		}
 
-		return $xml;
+		return $events;
 	}
 
 	public function get_images( $event_id ) {

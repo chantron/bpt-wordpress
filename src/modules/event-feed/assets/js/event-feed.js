@@ -22,7 +22,19 @@
             }
         }).done(function (response, status) {
             response = JSON.parse(response);
-            eventFeed.set('events', response.event);
+
+            for (var i = 0; i < response.length; i++) {
+                if (response[i].contactEmail === 'cat@bpt.com') {
+                    response.splice(i, 1);
+                    continue;
+                }
+
+                if (response[i].contactEmail === 'graeme@brownpapertickets.com') {
+                    response.splice(i, 1);
+                    continue;
+                }
+            }
+            eventFeed.set('events', response);
         }).always(function () {
             eventFeed.set('loading', false);
         });

@@ -140,6 +140,7 @@ class EventFeedType {
 	 * @param  array $data The data you'll use in the template.
 	 */
 	public function renderEventsBox($data) {
+        $manager = new EventFeedManager( $data['feed_id'] );
 		include('assets/templates/meta/events-box.php');
 	}
 
