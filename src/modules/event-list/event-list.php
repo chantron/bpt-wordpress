@@ -41,6 +41,12 @@ class EventList extends \BrownPaperTickets\Modules\Module {
 	public function register_settings() {
 
 		// Event Settings
+		//
+		register_setting(
+			$this->menu_slug . $this->module_name,
+			$this->setting_prefix . 'show_non_live_events'
+		);
+
 		register_setting(
 			$this->menu_slug . $this->module_name,
 			$this->setting_prefix . 'show_location_after_description'
@@ -197,6 +203,13 @@ class EventList extends \BrownPaperTickets\Modules\Module {
 		// Event Fields
 
 		add_settings_field(
+			$this->setting_prefix . 'show_non_live_events',
+			'Show Non-Live Events',
+			array( $input, 'show_non_live_events'),
+			$this->menu_slug . $this->module_name, $this->event_section_title
+		);
+
+		add_settings_field(
 			$this->setting_prefix . 'show_full_description',
 			'Display Full Description by Default',
 			array( $input, 'show_full_description' ),
@@ -328,6 +341,7 @@ class EventList extends \BrownPaperTickets\Modules\Module {
 
 	public function set_default_setting_values() {
 
+		update_option( $this->setting_prefix . 'show_non_live_events', 'false' );
 		update_option( $this->setting_prefix . 'show_full_description', 'false' );
 		update_option( $this->setting_prefix . 'show_location_after_description', 'false' );
 		update_option( $this->setting_prefix . 'credit_cards_displayed', array( 'visa', 'mc', 'discover', 'amex' ) );

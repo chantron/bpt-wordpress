@@ -93,7 +93,7 @@ if ( isset( $css ) ) {
 				<div class="address1">{{ address1 }}</div>
 				<div class="address2">{{ address2 }}</div>
 				<div>
-					<span class="city">{{ city }}</span>, <span class="state">{{ state }}</span> <span class="zip">{{ zip }}</span>
+					{{#city}}<span class="city">{{ city }}</span>,{{/city}} {{#state}}<span class="state">{{ state }}</span>{{/state}} {{#zip}}<span class="zip">{{ zip }}</span>{{/zip}}
 				</div>
 			</div>
 

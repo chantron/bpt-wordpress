@@ -35,8 +35,6 @@ class Api extends \BrownPaperTickets\Modules\ModuleApi {
 			$response['events'] = array();
 		}
 
-		$response['events'] = Utilities::remove_bad_events( $response['events'] );
-
 		return $response;
 	}
 }

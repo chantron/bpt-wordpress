@@ -216,9 +216,19 @@ class Inputs {
 		<?php
 	}
 
-	public function show_full_description() {
+    public function show_non_live_events() { ?>
+        <div class="show-non-live-events-wrapper">
+            <input id="show-non-live-events-true" name="_bpt_show_non_live_events" <?php esc_attr_e( Utils::is_selected( 'true', '_bpt_show_non_live_events', 'checked' ) );?> value="true" type="radio" />
+            <label for="show-non-live-events-true">Yes</label>
+            <input id="show-non-live-events-false" name="_bpt_show_non_live_events" <?php esc_attr_e( Utils::is_selected( 'false', '_bpt_show_non_live_events', 'checked' ) ); ?> value="false" type="radio" />
+            <label for="show-non-live-events-false">No</label>
+            <p class="description">
+                Select "yes" if you would like to display events that are not currently live.
+            </p>
+        </div>
+    <?php }
 
-		?>
+	public function show_full_description() { ?>
 		<div class="show-full-description-wrapper">
 			<input id="show-full-description-true" name="_bpt_show_full_description" <?php esc_attr_e( Utils::is_selected( 'true', '_bpt_show_full_description', 'checked' ) );?> value="true" type="radio" />
 			<label for="show-full-description-true">Yes</label>
@@ -228,9 +238,7 @@ class Inputs {
 				If set to "no", the event's full description will be hidden behind a "show description" toggle.
 			</p>
 		</div>
-
-		<?php
-	}
+	<?php }
 
 	public function show_location_after_description() {
 

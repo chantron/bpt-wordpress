@@ -70,7 +70,7 @@ class BPTPlugin {
 		$this->modules['purchase'] = new Modules\Purchase();
 		$this->modules['attendee_list'] = new Modules\AttendeeList();
 		$this->modules['setup_wizard'] = new Modules\SetupWizard();
-		$this->modules['event_feed'] = new Modules\EventFeed();
+		// $this->modules['event_feed'] = new Modules\EventFeed();
 	}
 
 	/**

@@ -21,6 +21,7 @@ class Api extends \BrownPaperTickets\Modules\ModuleApi {
 		/**
 		 * Get Event List Setting Options
 		 */
+		$show_non_live_events = get_option( '_bpt_show_non_live_events' );
 		$show_dates           = get_option( '_bpt_show_dates' );
 		$show_prices          = get_option( '_bpt_show_prices' );
 		$show_past_dates      = get_option( '_bpt_show_past_dates' );
@@ -52,7 +53,11 @@ class Api extends \BrownPaperTickets\Modules\ModuleApi {
 			$event_list;
 		}
 
-		$event_list = Utilities::remove_bad_events( $event_list );
+		if ( ! $show_non_live_events ) {
+			$event_list = Utilities::remove_bad_events( $event_list );
+		}
+
+		array_map(Utilities::unescapeDescription(), $event_list);
 
 		$event_list = Utilities::sort_prices( $event_list );
 
@@ -63,14 +68,14 @@ class Api extends \BrownPaperTickets\Modules\ModuleApi {
 			if ( $show_past_dates === 'false' ) {
 				$remove_past = false;
 			}
-
-			$event_list = Utilities::remove_bad_dates( $event_list, true, $remove_past );
+			if ( ! $show_non_live_events ) {
+				$event_list = Utilities::remove_bad_dates( $event_list, true, $remove_past );
+			}
 		}
 
 		if ( $show_prices === 'true' && $show_sold_out_prices === 'false' ) {
 			$event_list = Utilities::remove_bad_prices( $event_list );
 		}
-
 		return $event_list;
 	}
 }
