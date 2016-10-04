@@ -75,12 +75,18 @@ testAccount = function testAccount(event) {
             events = '<h3>Events</h3> ' + eventNames.join(', ');
         }
 
-        if (name && events) {
+        if (name) {
             $name.html(name);
-            $events.html(events);
             $message.html('<h1>Does this look OK?</h1>');
+            if (events) {
+                $events.html(events);
+            } else {
+                $events.html('<h3>It doesn\'t look like you have any events live yet.</h3>')
+            }
             return;
         }
+
+
         $message.html('<h1>Sorry, that developer/client ID combination did not work.</h1>');
         $error.text('Double check those fields for accuracy. If you\'re still having issues, check the help section on the top right of the page for some tips.');
     })
