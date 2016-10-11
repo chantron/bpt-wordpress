@@ -217,9 +217,13 @@ class Widget extends \WP_Widget {
 				<div class="bpt-calendar-widget-event-view-event" intro="slide" outro="fade">
 					<h2>{{{ unescapeHTML(title) }}}</h2>
 					<div class="bpt-calendar-widget-event-view-location">
+                        {{#address1}}
 						 <div class="address1">{{ address1 }}</div>
+                         {{/address1}}
+                         {{#address2}}
 						 <div class="address2">{{ address2 }}</div>
-						 <div><span class="city">{{ city }}</span>, <span class="state">{{ state }}</span></div>
+                         {{/address2}}
+						 <div>{{#city}}<span class="city">{{ city }}</span>,{{/city}} {{#state}}<span class="state">{{ state }}</span>{{/state}}</div>
 					</div>
 					<div class="bpt-calendar-widget-event-view-date">
 						{{ formatDate( '<?php esc_attr_e( $date_format ); ?>', date ) }}

@@ -81,17 +81,17 @@ class EventFeedType {
 	 * @return array An array of meta fields.
 	 */
 	public function get($id) {
-		$data = [];
+		$data = array('events' => '');
 
 		foreach ( $this->meta as $meta => $type ) {
 			$data[ $meta ] = get_post_meta( $id, $meta, true );
 
 			if ( $data[ $meta ] === '' && $type === 'boolean' ) {
-				$data[$meta] = false;
+				$data[ $meta ] = false;
 			}
 
-			if ( $data[$meta] !== false && $type === 'boolean' ) {
-				$data[$meta] = true;
+			if ( $data[ $meta ] !== false && $type === 'boolean' ) {
+				$data[ $meta ] = true;
 			}
 		}
 

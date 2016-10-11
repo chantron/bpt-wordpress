@@ -3,8 +3,8 @@ Contributors: Chandler Blum
 Donate Link: N/A
 Tags: bpt, brown paper tickets
 Requires at least: 3.6
-Tested up to: 4.5.2
-Stable tag: 0.8.0
+Tested up to: 4.6.1
+Stable tag: 0.7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -105,11 +105,15 @@ No upgrade notes.
 
 == Changelog ==
 
-== v0.8.0 ==
+== v0.7.3 ==
 
-**New Feature**
+** Improvements **
 
-* Added Custom Event Feed
+* Added option to display non-live events.
+
+** Bug Fixes **
+
+* Fixed issue with account test displaying error when everything is actually a-okay.
 
 == v0.7.2 ==
 

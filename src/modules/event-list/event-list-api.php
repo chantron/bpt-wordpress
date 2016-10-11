@@ -53,11 +53,11 @@ class Api extends \BrownPaperTickets\Modules\ModuleApi {
 			$event_list;
 		}
 
-		if ( ! $show_non_live_events ) {
+		if ( ! $event_id && $show_non_live_events === 'false' ) {
 			$event_list = Utilities::remove_bad_events( $event_list );
 		}
 
-		array_map(Utilities::unescapeDescription(), $event_list);
+		$event_list = Utilities::unescape_description( $event_list );
 
 		$event_list = Utilities::sort_prices( $event_list );
 

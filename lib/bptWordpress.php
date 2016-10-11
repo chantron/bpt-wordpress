@@ -544,10 +544,13 @@ class BptWordpress {
 		return $event_list;
 	}
 
-    public static function unescapeDescription($event) {
-        $event['fullDescription'] = html_entity_decode($event['fullDescription']);
-        $event['fullDescription'] = nl2br($event['fullDescription']);
-        return $event;
+    public static function unescape_description($events) {
+        foreach ($events as &$event) {
+            $event['fullDescription'] = html_entity_decode( $event['fullDescription'] );
+            $event['fullDescription'] = nl2br( $event['fullDescription'] );
+        }
+
+        return $events;
     }
 
 	/**

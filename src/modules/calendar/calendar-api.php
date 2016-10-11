@@ -19,6 +19,7 @@ class Api extends \BrownPaperTickets\Modules\ModuleApi {
 	public function get_events( $client_id = null, $dates = true, $prices = false ) {
 
 		$dev_id = get_option( '_bpt_dev_id' );
+		$show_non_live_events = get_option( '_bpt_show_non_live_events' );
 
 		if ( ! $this->dev_id ) {
 			return array( 'success' => false, 'error' => 'Unable to fetch events.' );
@@ -31,15 +32,13 @@ class Api extends \BrownPaperTickets\Modules\ModuleApi {
 		$events = new \BrownPaperTickets\APIv2\EventInfo( $this->dev_id );
 
 		$events = $events->getEvents( $client_id, null, $dates, $prices );
-
 		$clndr_format = array();
 
 		foreach ( $events as $event ) {
 
-			if ( $event['live'] ) {
+			if ( $event['live'] || $show_non_live_events === 'true' ) {
 				foreach ( $event['dates'] as $date ) {
-
-					if ( $date['live'] ) {
+					if ( $date['live'] || $show_non_live_events === 'true' ) {
 
 						$clndr_format[] = array(
 							'eventID' => $event['id'],
