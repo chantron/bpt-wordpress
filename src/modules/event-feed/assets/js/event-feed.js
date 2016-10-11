@@ -29,7 +29,13 @@
                     continue;
                 }
 
-                if (response[i].contactEmail === 'graeme@brownpapertickets.com') {
+
+		if (response[i].contactEmail === 'catherine@brownpapertickets.com') {
+		    response.splice(i, 1);
+		    continue;
+		}                
+
+		if (response[i].contactEmail === 'graeme@brownpapertickets.com') {
                     response.splice(i, 1);
                     continue;
                 }
